@@ -5,7 +5,7 @@ static const char *ttstrs[34] =
     {"lparensym", "rparensym",
     "identsym", "numbersym", 
     "eqsym", "neqsym", "lessym", "leqsym", "gtrsym", "geqsym", 
-    "plussym", "minussym", "multsym", "divsym"};
+    "plussym", "minussym", "multsym", "divsym", "eofsym"};
 
 // Return the name of the token_type enum
 // corresponding to the given token_type value

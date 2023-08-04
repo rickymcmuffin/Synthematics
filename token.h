@@ -9,15 +9,14 @@ typedef enum {
     lparensym, rparensym,
     identsym, numbersym, 
     eqsym, neqsym, lessym, leqsym, gtrsym, geqsym, 
-    plussym, minussym, multsym, divsym, 
+    plussym, minussym, multsym, divsym, eofsym 
 } token_type;
 
 // information about each token
 typedef struct token {
     token_type typ;
-    const char *filename;
-    unsigned int line;
-    unsigned int column;
+    const char *expression;
+    unsigned int index;
     char *text; // non-NULL, if applicable
     short int value; // when typ==numbersym, its value
 } token;

@@ -4,25 +4,27 @@
 
 #define MAX_IDENT_LENGTH 255
 
+#include <iostream>
+
 // types of tokens
 typedef enum {
-    lparensym, rparensym,
-    identsym, numbersym, 
+    lparensym, rparensym, colonsym, commasym,
+    identsym, numbersym, doublesym,
     eqsym, neqsym, lessym, leqsym, gtrsym, geqsym, 
-    plussym, minussym, multsym, divsym, eofsym 
+    plussym, minussym, multsym, divsym, powsym, eofsym 
 } token_type;
 
 // information about each token
 typedef struct token {
     token_type typ;
-    const char *expression;
+    std::string expression;
     unsigned int index;
-    char *text; // non-NULL, if applicable
+    std::string text; // non-NULL, if applicable
     short int value; // when typ==numbersym, its value
 } token;
 
 // Return the name of the token_type enum
 // corresponding to the given token_type value
-extern const char *ttyp2str(token_type ttyp);
+extern std::string ttyp2str(token_type ttyp);
 
 #endif

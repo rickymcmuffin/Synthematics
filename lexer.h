@@ -5,20 +5,24 @@
 #include <stdbool.h>
 #include "token.h"
 
-using namespace std;
 
 class Lexer
 {
 private:
-	string equation;
-	int index;
+	std::string expression;
+	int currentIndex;
 	bool done;
+
+	void consumeIgnored();
+	token ident();
+	token number();
+
 
 
 public: 
 	
 	// Initializes the lexer with a string
-	Lexer(string equation);
+	Lexer(std::string equation);
 
 	// Returns the next token in the string	
 	token next();

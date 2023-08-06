@@ -56,3 +56,9 @@ token lexer_next(const char *expression, int *curIndex){
 		
 	}
 }
+
+
+Lexer::Lexer(string equation){
+
+}
+

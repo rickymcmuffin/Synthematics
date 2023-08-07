@@ -109,6 +109,12 @@ token Lexer::next()
 	case ')':
 		ret.typ = rparensym;
 		break;
+	case '{':
+		ret.typ = lcurlysym;
+		break;
+	case '}':
+		ret.typ = rcurlysym;
+		break;
 	case ':':
 		ret.typ = colonsym;
 		break;
@@ -128,6 +134,18 @@ token Lexer::next()
 		ret.typ = neqsym;
 		break;
 	case '<':
+		if (expression[currentIndex + 1] == '=')
+		{
+			ret.text += expression[currentIndex + 1];
+			currentIndex++;
+			ret.typ = lessym;
+		}
+		else
+		{
+			ret.typ = leqsym;
+		}
+		break;
+	case '>':
 		if (expression[currentIndex + 1] == '=')
 		{
 			ret.text += expression[currentIndex + 1];

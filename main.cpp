@@ -7,14 +7,21 @@ using namespace std;
 
 int main()
 {
-	std::string s = "5*212  + 4(4 abc 3f))";
+	std::string s = "5*212 > <== }+ 4(4 abc ,3f))";
 	Lexer l = Lexer(s);
 
 	cout << s + "\n";
-	while (!l.isDone())
+	try
 	{
-		token t = l.next();
-		cout << t.expression + " | " + to_string(t.index) + " | " + ttyp2str(t.typ) + " | " + t.text + " | " + to_string(t.value) + "\n";
+		while (!l.isDone())
+		{
+			token t = l.next();
+			cout << t.expression + " | " + to_string(t.index) + " | " + ttyp2str(t.typ) + " | " + t.text + " | " + to_string(t.value) + "\n";
+		}
+	}
+	catch (EquationException e)
+	{
+		cout << e.what();
 	}
 
 	return 0;

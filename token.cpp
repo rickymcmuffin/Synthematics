@@ -2,7 +2,7 @@
 
 // Translation from enum values to strings
 static std::string ttstrs[34] =
-    {"lparensym", "rparensym", "colonsym", "commasym",
+    {"lparensym", "rparensym", "lcurlysym", "rcurlysym", "colonsym", "commasym",
     "identsym", "numbersym", "doublesym",
     "eqsym", "neqsym", "lessym", "leqsym", "gtrsym", "geqsym", 
     "plussym", "minussym", "multsym", "divsym", "powsym", "eofsym"};

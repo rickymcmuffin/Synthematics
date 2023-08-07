@@ -8,7 +8,7 @@
 
 // types of tokens
 typedef enum {
-    lparensym, rparensym, colonsym, commasym,
+    lparensym, rparensym, lcurlysym, rcurlysym, colonsym, commasym,
     identsym, numbersym, doublesym,
     eqsym, neqsym, lessym, leqsym, gtrsym, geqsym, 
     plussym, minussym, multsym, divsym, powsym, eofsym 

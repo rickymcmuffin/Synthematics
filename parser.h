@@ -53,6 +53,9 @@ private:
 
 	// <signed-number> ::= + <number> | - <number> | <number>
 	AST *parseSignedNumber();
+
+
+	AST_list parseCommaParameters();
 };
 
 #endif

@@ -5,6 +5,27 @@
 
 using namespace std;
 
+// Requires: !ast_list_is_empty(*head) ==> !ast_list_is_empty(*last).
+// Requires: when called head points to the first element of an AST_list
+// and last points to the last element in that list.
+// Modifies *head, *last;
+// Splice the list starting at lst into the AST list starting at *head,
+// and make *last point to the last element in the resulting list.
+static void add_AST_to_end(AST_list *head, AST_list *last, AST_list lst)
+{
+	if (ast_list_is_empty(*head))
+	{
+		*head = lst;
+		*last = ast_list_last_elem(lst);
+	}
+	else
+	{
+		// assert(*last != NULL);
+		ast_list_splice(*last, lst);
+		*last = ast_list_last_elem(lst);
+	}
+}
+
 Parser::Parser(string expression)
 {
 	Parser::lexer = new Lexer(expression);
@@ -127,10 +148,13 @@ AST *Parser::parseFactor()
 		idt = currentTok;
 		eat(identsym);
 		AST *iden = ast_ident(idt, idt.text);
-		if(currentTok.typ != lparensym){
+		if (currentTok.typ != lparensym)
+		{
 			return iden;
 		}
-		return parseParameters();
+		AST_list params = parseParameters();
+
+		return ast_func_call(idt, iden, params);
 		break;
 	case lparensym:
 		return parseParenExpr();
@@ -151,10 +175,34 @@ AST *Parser::parseFactor()
 	return (AST *)NULL;
 }
 
-AST_list Parser::parseParameters(){
+AST_list Parser::parseParameters()
+{
 	eat(lparensym);
 
-	while()
+	AST_list params = ast_list_empty_list();
+	if (currentTok.typ != rparensym)
+	{
+		params = ast_list_singleton(parseExpression());
+		AST_list rest = parseCommaParameters();
+	}
 
-	
+	eat(rparensym);
+
+	return params;
+}
+
+AST_list Parser::parseCommaParameters()
+{
+	AST_list ret = ast_list_empty_list();
+	AST_list last = ast_list_empty_list();
+	while(currentTok.typ == commasym){
+		eat(commasym);
+
+		AST_list next = parseExpression();
+		add_AST_to_end(&ret, &last, next);
+		
+	}
+
+	return ret;
+
 }

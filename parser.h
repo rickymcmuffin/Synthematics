@@ -45,6 +45,9 @@ private:
 	// <factor> ::= <ident> | <paren-expr> | <signed-number>
 	AST *parseFactor();
 
+	// <ident> ( <parameters> )
+	AST *parseParameters();
+
 	// <paren-expr> ::= ( <expr> )
 	AST *parseParenExpr();
 

@@ -1,6 +1,7 @@
 /* $Id: ast.h,v 1.9 2023/03/23 05:23:01 leavens Exp $ */
 #ifndef _AST_H
 #define _AST_H
+#include <iostream>
 #include <stdbool.h>
 #include "token.h"
 
@@ -97,7 +98,7 @@ typedef struct
 typedef struct
 {
     // name of a constant or variable
-    const char *name;
+    std::string *name;
 } ident_t;
 
 // E ::= n
@@ -148,7 +149,7 @@ extern AST *ast_func_call(token t, AST *ident, AST_list param);
 
 // Return a (pointer to a) fresh AST for an ident expression
 // with the given name.
-extern AST *ast_ident(token t, const char *name);
+extern AST *ast_ident(token t, std::string name);
 
 // Return a (pointer to a) fresh AST for an (signed) number expression
 // with the given value

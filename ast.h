@@ -98,7 +98,7 @@ typedef struct
 typedef struct
 {
     // name of a constant or variable
-    std::string *name;
+    std::string name;
 } ident_t;
 
 // E ::= n

@@ -48,6 +48,8 @@ private:
 	// <ident> ( <parameters> )
 	AST *parseParameters();
 
+	AST_list parseCommaParameters();
+
 	// <paren-expr> ::= ( <expr> )
 	AST *parseParenExpr();
 
@@ -55,7 +57,6 @@ private:
 	AST *parseSignedNumber();
 
 
-	AST_list parseCommaParameters();
 };
 
 #endif

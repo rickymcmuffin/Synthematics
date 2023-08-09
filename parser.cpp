@@ -78,20 +78,26 @@ AST *Parser::parseAddSubTerm()
 	switch (currentTok.typ)
 	{
 	case plussym:
+	{
 		eat(plussym);
 		AST *exp = parseTerm();
 		return ast_op_expr(opt, addop, exp);
 		break;
+	}
 	case minussym:
+	{
 		eat(minussym);
 		AST *e = parseTerm();
 		return ast_op_expr(opt, subop, e);
 		break;
-	default:; // empty statement needed so label isn't immediately
-		// followed by a declaration, which is prohibited in C;
+	}
+	default: // empty statement needed so label isn't immediately
+		    // followed by a declaration, which is prohibited in C;
+	{
 		token_type expected[2] = {plussym, minussym};
 		throw EquationException("Expected + or -", currentTok.index);
 		break;
+	}
 	}
 	// The following should never execute
 	return (AST *)NULL;
@@ -118,20 +124,26 @@ AST *Parser::parseMultDivFactor()
 	switch (currentTok.typ)
 	{
 	case multsym:
+	{
 		eat(multsym);
 		AST *exp = parseFactor();
 		return ast_op_expr(opt, multop, exp);
 		break;
+	}
 	case divsym:
+	{
 		eat(divsym);
 		AST *e = parseFactor();
 		return ast_op_expr(opt, divop, e);
 		break;
-	default:; // empty statement needed so label isn't immediately
-		// followed by a declaration, which is prohibited in C;
+	}
+	default: // empty statement needed so label isn't immediately
+		    // followed by a declaration, which is prohibited in C;
+	{
 		token_type expected[2] = {multsym, divsym};
 		throw EquationException("Expected * or /", opt.index);
 		break;
+	}
 	}
 	// The following should never execute
 	return (AST *)NULL;
@@ -143,8 +155,9 @@ AST *Parser::parseFactor()
 	token idt;
 	switch (currentTok.typ)
 	{
-	case identsym:; // empty statement needed so label isn't immediately
-		// followed by a declaration, which is prohibited in C;
+	case identsym: // empty statement needed so label isn't immediately
+				// followed by a declaration, which is prohibited in C;
+	{
 		idt = currentTok;
 		eat(identsym);
 		AST *iden = ast_ident(idt, idt.text);
@@ -156,20 +169,27 @@ AST *Parser::parseFactor()
 
 		return ast_func_call(idt, iden, params);
 		break;
+	}
 	case lparensym:
+	{
 		return parseParenExpr();
 		break;
+	}
 	case plussym:
 	case minussym:
 	case numbersym:
+	{
 		return parseSignedNumber();
 		break;
-	default:; // empty statement needed so label isn't immediately
-		// followed by a declaration, which is prohibited in C;
+	}
+	default: // empty statement needed so label isn't immediately
+		    // followed by a declaration, which is prohibited in C;
+	{
 		token_type expected[5] =
 		    {identsym, lparensym, plussym, minussym, numbersym};
 		throw EquationException("Expected factor", currentTok.index);
 		break;
+	}
 	}
 	// The following should never execute
 	return (AST *)NULL;
@@ -195,14 +215,43 @@ AST_list Parser::parseCommaParameters()
 {
 	AST_list ret = ast_list_empty_list();
 	AST_list last = ast_list_empty_list();
-	while(currentTok.typ == commasym){
+	while (currentTok.typ == commasym)
+	{
 		eat(commasym);
 
 		AST_list next = parseExpression();
 		add_AST_to_end(&ret, &last, next);
-		
 	}
 
 	return ret;
+}
 
+// <paren-expr> ::= ( <expr> )
+AST *Parser::parseParenExpr()
+{
+	eat(lparensym);
+	AST *expr = parseExpression();
+	eat(rparensym);
+
+	return expr;
+}
+
+// <signed-number> ::= + <number> | - <number> | <number>
+AST *Parser::parseSignedNumber()
+{
+	token num = currentTok;
+	bool isNegative = false;
+	if (num.typ == minussym)
+	{
+		eat(minussym);
+		isNegative = true;
+	}
+	else if (num.typ == plussym)
+	{
+		eat(plussym);
+	}
+
+	int value = currentTok.value;
+
+	return ast_number(num, value);
 }

@@ -253,5 +253,6 @@ AST *Parser::parseSignedNumber()
 
 	int value = currentTok.value;
 
+	eat(numbersym);
 	return ast_number(num, value);
 }

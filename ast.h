@@ -183,4 +183,8 @@ extern AST_list ast_list_last_elem(AST_list lst);
 // Return the number of elements in the AST list lst.
 extern int ast_list_size(AST_list lst);
 
+extern void printAST(AST *ast);
+
+std::string astTypeToString(AST_type type);
+
 #endif

@@ -69,7 +69,8 @@ AST *ast_bin_expr(token t, AST *e1, bin_arith_op arith_op, AST *e2)
 
 // Return a (pointer to a) fresh AST for a function call
 // with function identifier AST ident and list of parameters.
-extern AST *ast_func_call(token t, AST *ident, AST_list param){
+extern AST *ast_func_call(token t, AST *ident, AST_list param)
+{
     AST *ret = ast_allocate(t.index);
     ret->type_tag = func_call_ast;
     ret->data.func_call.identifier = ident;
@@ -159,4 +160,25 @@ extern int ast_list_size(AST_list lst)
         lst = ast_list_rest(lst);
     }
     return ret;
+}
+
+static std::string atstrs[7] = {
+    "odd_cond_ast",
+    "bin_cond_ast",
+    "op_expr_ast",
+    "bin_expr_ast",
+    "func_call_ast",
+    "ident_ast",
+    "number_ast"
+
+};
+
+std::string astTypeToString(AST_type type){
+    return atstrs[type];
+}
+
+extern void printAST(AST *ast)
+{
+    std::cout << astTypeToString(ast->type_tag) + '\n';
+
 }

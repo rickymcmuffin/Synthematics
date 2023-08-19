@@ -9,11 +9,11 @@ void unparseExpr(AST *ast, std::string *s);
 
 void unparseBinExpr(AST *ast, std::string *s);
 
-void unparseArithOp(FILE *out, bin_arith_op op);
+void unparseArithOp(bin_arith_op op, std::string *s);
 
 void unparseFuncCall(AST *ast, std::string *s);
 
-void unparseParameters(AST_list *al, std::string *s);
+void unparseParameters(AST_list al, std::string *s);
 
 void unparseIdent(AST *ast, std::string *s);
 

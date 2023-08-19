@@ -61,6 +61,27 @@ void unparseArithOp(bin_arith_op op, std::string *s)
 
 void unparseFuncCall(AST *ast, std::string *s)
 {
+	unparseIdent(ast->data.func_call.identifier, s);
+
+	*s += '(';
+
+	unparseParameters(ast->data.func_call.parameters);
+
+	*s += ')';
+
+	
+}
+
+void unparseParameters(AST_list *al, std::string *s){
+	if(!ast_list_is_empty(al)){
+		unparseExpr(ast_list_first(al), s);
+		al = ast_list_rest(al);
+	}
+	while(!ast_list_is_empty(al)){
+		*s += ',';
+		unparseExpr(ast_list_first(al), s);
+		al = ast_list_rest(al);
+	}
 }
 
 void unparseIdent(AST *ast, std::string *s)

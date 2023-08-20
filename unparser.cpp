@@ -12,29 +12,35 @@ std::string unparseExpression(AST *ast)
 
 void unparseExpr(AST *ast, std::string *s)
 {
-	printAST(ast);
 	switch (ast->type_tag)
 	{
 	case bin_expr_ast:
 		unparseBinExpr(ast, s);
+		break;
 	case func_call_ast:
 		unparseFuncCall(ast, s);
+		break;
 	case ident_ast:
 		unparseIdent(ast, s);
+		break;
 	case number_ast:
 		unparseNum(ast, s);
+		break;
 	}
 }
 
 void unparseBinExpr(AST *ast, std::string *s)
 {	
 	
-	std::cout << *s + " bruh2\n";
 	*s += '(';
 
 	unparseExpr(ast->data.bin_expr.leftexp, s);
 
+	*s += ' ';
+
 	unparseArithOp(ast->data.bin_expr.arith_op, s);
+
+	*s += ' ';
 
 	unparseExpr(ast->data.bin_expr.rightexp, s);
 
@@ -65,7 +71,6 @@ void unparseArithOp(bin_arith_op op, std::string *s)
 
 void unparseFuncCall(AST *ast, std::string *s)
 {	
-	std::cout << *s + " bruh\n";
 	unparseIdent(ast->data.func_call.identifier, s);
 
 	*s += '(';
@@ -83,7 +88,7 @@ void unparseParameters(AST_list al, std::string *s){
 		al = ast_list_rest(al);
 	}
 	while(!ast_list_is_empty(al)){
-		*s += ',';
+		*s += ", ";
 		unparseExpr(ast_list_first(al), s);
 		al = ast_list_rest(al);
 	}
@@ -96,7 +101,5 @@ void unparseIdent(AST *ast, std::string *s)
 
 void unparseNum(AST *ast, std::string *s)
 {
-	std::cout << *s + " first\n";
 	*s += std::to_string(ast->data.number.value);
-	std::cout << *s + " last\n";
 }

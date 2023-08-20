@@ -166,7 +166,6 @@ AST *Parser::parseFactor()
 			return iden;
 		}
 		AST_list params = parseParameters();
-
 		return ast_func_call(idt, iden, params);
 		break;
 	}

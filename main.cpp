@@ -4,6 +4,7 @@
 #include "Lexer.h"
 #include "parser.h"
 #include "unparser.h"
+#include "unparseMath.h"
 
 using namespace std;
 
@@ -27,12 +28,32 @@ int main()
 	// 	cout << e.what();
 	// }
 
-	string s = "4 + 5";
-	Parser p = Parser(s);
+	string s = "-4*(x+x)";
+
+	char expr[100];
+	float x;
+
+	cout << "Enter your expression: ";
+
+	// cin.getline(expr, 100);
+
+	cin.getline(expr, 100);
+
+	cout << "Enter your x value: ";
+
+	cin >> x;
+
+	Parser p = Parser(expr);
 
 	AST *ast = p.parseExpression();
 
 	cout << unparseExpression(ast);
+
+	cout << "\n";
+
+	cout << resultExpression(ast, x);
+
+
 	
 	return 0;
 }

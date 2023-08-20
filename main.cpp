@@ -28,30 +28,24 @@ int main()
 	// 	cout << e.what();
 	// }
 
-	string s = "-4*(x+x)";
+	string s = "12 + x";
 
-	char expr[100];
-	float x;
 
-	cout << "Enter your expression: ";
-
-	// cin.getline(expr, 100);
-
-	cin.getline(expr, 100);
-
-	cout << "Enter your x value: ";
-
-	cin >> x;
-
-	Parser p = Parser(expr);
+	Parser p = Parser(s);
 
 	AST *ast = p.parseExpression();
 
-	cout << unparseExpression(ast);
+	string unParsed = unparseExpression(ast);
 
-	cout << "\n";
+	int result = resultExpression(ast, 3);
 
-	cout << resultExpression(ast, x);
+
+
+	cout << unParsed << endl;
+
+	cout << result;
+
+	
 
 
 	

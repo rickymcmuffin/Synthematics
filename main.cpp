@@ -10,44 +10,42 @@ using namespace std;
 
 int main()
 {
-	// std::string s = "4 + 5";
-	// Lexer l = Lexer(s);
+	string s = "12.3 + x";
+	Lexer l = Lexer(s);
+
+	try
+	{
+		while (!l.isDone())
+		{
+			token t = l.next();
+			cout << t.expression + " | " + to_string(t.index) + " | " + ttyp2str(t.typ) + " | " + t.text + " | " + to_string(t.value) + "\n";
+		}
+	}
+	catch (EquationException e)
+	{
+		cout << e.what();
+	}
 
 
-	// cout << s + "\n";
-	// try
-	// {
-	// 	while (!l.isDone())
-	// 	{
-	// 		token t = l.next();
-	// 		cout << t.expression + " | " + to_string(t.index) + " | " + ttyp2str(t.typ) + " | " + t.text + " | " + to_string(t.value) + "\n";
-	// 	}
-	// }
-	// catch (EquationException e)
-	// {
-	// 	cout << e.what();
-	// }
+	try
+	{
+		cout << "1\n";
+		Parser p = Parser(s);
+		cout << "2\n";
 
-	string s = "12 + x";
+		AST *ast = p.parseExpression();
+		cout << "3\n";
 
+		string unParsed = unparseExpression(ast);
+		cout << "4\n";
 
-	Parser p = Parser(s);
+		int result = resultExpression(ast, 3);
+		cout << unParsed << endl;
 
-	AST *ast = p.parseExpression();
+		cout << result;
+	} catch (EquationException e){
+		cout << e.what();
+	}
 
-	string unParsed = unparseExpression(ast);
-
-	int result = resultExpression(ast, 3);
-
-
-
-	cout << unParsed << endl;
-
-	cout << result;
-
-	
-
-
-	
 	return 0;
 }

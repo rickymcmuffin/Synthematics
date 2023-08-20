@@ -2,6 +2,7 @@
 #ifndef _LEXER_H
 #define _LEXER_H
 #include <iostream>
+#include <string>
 #include <stdbool.h>
 #include "token.h"
 

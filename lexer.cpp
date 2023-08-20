@@ -61,7 +61,7 @@ token Lexer::number()
 	while (isdigit(c) || c == '.')
 	{
 		if(c == '.'){
-			ret.typ = doublesym;
+			ret.typ = numbersym;
 		}
 		if (n >= MAX_IDENT_LENGTH)
 		{
@@ -69,10 +69,10 @@ token Lexer::number()
 		}
 
 		ret.text += c;
-		ret.value = stoi(ret.text);
 		currentIndex++;
 		c = expression[currentIndex];
 	}
+	ret.value = stof(ret.text);
 
 	return ret;
 }

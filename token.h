@@ -20,7 +20,7 @@ typedef struct token {
     std::string expression;
     unsigned int index;
     std::string text; // non-NULL, if applicable
-    short int value; // when typ==numbersym, its value
+    float value; // when typ==numbersym, its value
 } token;
 
 // Return the name of the token_type enum

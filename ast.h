@@ -104,7 +104,7 @@ typedef struct
 // E ::= n
 typedef struct
 {
-    short int value;
+    float value;
 } number_t;
 
 // The actual AST definition:

@@ -59,21 +59,15 @@ void Parser::eat(token_type tt)
 
 AST *Parser::parseExpression()
 {
-	cout << "parsing expression!\n";
 	token fst = currentTok;
 	AST *trm = parseTerm();
 	AST *exp = trm;
-	cout << "parsing expression1!\n";
 	while (currentTok.typ == plussym || currentTok.typ == minussym)
 	{
-		cout << "parsing expression2!\n";
 		AST *rght = parseAddSubTerm();
-		cout << "parsing expression3\n";
 		exp = ast_bin_expr(fst, exp, rght->data.op_expr.arith_op,
 					    rght->data.op_expr.exp);
-		cout << "parsing expression4!\n";
 	}
-	cout << "done parsing expression!\n";
 	return exp;
 }
 
@@ -85,11 +79,8 @@ AST *Parser::parseAddSubTerm()
 	{
 	case plussym:
 	{
-		cout << "addsub1!\n";
 		eat(plussym);
-		cout << "addsub1.5!\n";
 		AST *exp = parseTerm();
-		cout << "addsub2!\n";
 		return ast_op_expr(opt, addop, exp);
 		break;
 	}
@@ -115,9 +106,7 @@ AST *Parser::parseAddSubTerm()
 AST *Parser::parseTerm()
 {
 	token fst = currentTok;
-	cout << "parseterm1\n";
 	AST *fac = parseFactor();
-	cout << "parseterm2\n";
 	AST *exp = fac;
 	while (currentTok.typ == multsym || currentTok.typ == divsym)
 	{
@@ -163,19 +152,15 @@ AST *Parser::parseMultDivFactor()
 // <factor> ::= <ident> | <paren-expr> | <signed-number> | <function>
 AST *Parser::parseFactor()
 {
-	cout << "parsefactor\n";
 	token idt;
 	switch (currentTok.typ)
 	{
 	case identsym: // empty statement needed so label isn't immediately
 				// followed by a declaration, which is prohibited in C;
 	{
-		cout << "parsefactor1\n";
 		idt = currentTok;
 		eat(identsym);
-	cout << idt.text;
 		AST *iden = ast_ident(idt, idt.text);
-	cout << "parsefactor1.5\n";
 		if (currentTok.typ != lparensym)
 		{
 			return iden;
@@ -193,7 +178,6 @@ AST *Parser::parseFactor()
 	case minussym:
 	case numbersym:
 	{
-		cout << "parsefactor2\n";
 		return parseSignedNumber();
 		break;
 	}
@@ -207,7 +191,6 @@ AST *Parser::parseFactor()
 	}
 	}
 	// The following should never execute
-	cout << "parsefactor3\n";
 	return (AST *)NULL;
 }
 

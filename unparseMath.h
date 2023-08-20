@@ -1,6 +1,6 @@
 #ifndef _UNPARSEMATH_H
 #define _UNPARSEMATH_H
-#include "AST.h"
+#include "ast.h"
 
 
 float resultExpression(AST *expression, float xValue);

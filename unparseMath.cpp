@@ -57,11 +57,13 @@ float resultBinExpr(AST *binExpr)
 		break;
 	}
 
+
 	return res;
 }
 
 float resultFuncCall(AST *funcCall)
 {
+	return 0;
 }
 
 float resultIdent(AST *ident)

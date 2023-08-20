@@ -74,19 +74,16 @@ extern AST *ast_func_call(token t, AST *ident, AST_list param)
     AST *ret = ast_allocate(t.index);
     ret->type_tag = func_call_ast;
     ret->data.func_call.identifier = ident;
+    return ret;
 }
 
 // Return a (pointer to a) fresh AST for an identref expression
 // with the given name.
-AST *ast_ident(token t, std::string name)
+AST *ast_ident(token t, std::string str)
 {
-    cout << "astident\n";
     AST *ret = ast_allocate(t.index);
-    cout << "astident1\n";
     ret->type_tag = ident_ast;
-    cout << name << flush;
-    ret->data.ident.name = std::string(name);
-    cout << "astident3\n" << flush;
+    ret->data.ident.name = str;
     return ret;
 }
 

@@ -80,9 +80,13 @@ extern AST *ast_func_call(token t, AST *ident, AST_list param)
 // with the given name.
 AST *ast_ident(token t, std::string name)
 {
+    cout << "astident\n";
     AST *ret = ast_allocate(t.index);
+    cout << "astident1\n";
     ret->type_tag = ident_ast;
-    ret->data.ident.name = name;
+    cout << name << flush;
+    ret->data.ident.name = std::string(name);
+    cout << "astident3\n" << flush;
     return ret;
 }
 

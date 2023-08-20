@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	string s = "12.3 + x";
+	string s = "7 / x";
 	Lexer l = Lexer(s);
 
 	try

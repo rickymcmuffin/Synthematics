@@ -43,7 +43,7 @@ int main()
 
 		string unParsed = unparseExpression(ast);
 
-		float result = resultExpression(ast, 3);
+		float result = resultExpression(ast, xValue);
 		cout << unParsed << endl;
 
 		cout << result << '\n';

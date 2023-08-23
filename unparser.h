@@ -1,6 +1,7 @@
 #ifndef _UNPARSER_H
 #define _UNPARSER_H
 #include <iostream>
+#include <string>
 #include "ast.h"
 
 std::string unparseExpression(AST *ast);

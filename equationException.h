@@ -2,6 +2,7 @@
 #define _EQUATIONEXCEPTION_H
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 

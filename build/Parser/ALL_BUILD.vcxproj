@@ -173,9 +173,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\ricky\Documents\Projects\Synthulator\build\Parser\MathSynth.vcxproj">
-      <Project>{5B4AB619-E9B2-3956-8353-3A7B17FF8FCA}</Project>
-      <Name>MathSynth</Name>
+    <ProjectReference Include="C:\Users\ricky\Documents\Projects\Synthulator\build\Parser\Parser.vcxproj">
+      <Project>{6496F36D-E492-3165-8345-746BB9A91D69}</Project>
+      <Name>Parser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

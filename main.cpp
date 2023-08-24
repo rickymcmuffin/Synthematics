@@ -1,4 +1,7 @@
+#include "Parser/parser.h"
+#include "Parser/unparser.h"
 #include "MainComponent.h"
+#include <iostream>
 
 #define JUCE_APPLICATION_NAME_STRING_COOL "GuiAppApplication"
 #define JUCE_APPLICATION_VERSION_STRING_COOL "1.0.0"
@@ -23,6 +26,12 @@ public:
         // This method is where you should put your application's initialisation code..
         juce::ignoreUnused (commandLine);
 
+        Parser p = Parser("12 + x");
+
+        AST *ast = p.parseExpression();
+
+        std::cout << unparseExpression(ast);
+        
         mainWindow.reset (new MainWindow (getApplicationName()));
     }
 

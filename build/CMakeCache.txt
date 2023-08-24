@@ -251,6 +251,15 @@ MathSynth_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 MathSynth_SOURCE_DIR:STATIC=C:/Users/ricky/Documents/Projects/Synthulator/Parser
 
+//Value Computed by CMake
+Parser_BINARY_DIR:STATIC=C:/Users/ricky/Documents/Projects/Synthulator/build/Parser
+
+//Value Computed by CMake
+Parser_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Parser_SOURCE_DIR:STATIC=C:/Users/ricky/Documents/Projects/Synthulator/Parser
+
 
 ########################
 # INTERNAL cache entries

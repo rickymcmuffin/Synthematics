@@ -195,7 +195,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\ricky\Documents\Projects\Synthulator\build\Parser\ALL_BUILD.vcxproj">
+    <ProjectReference Include="C:\Users\ricky\Documents\Projects\Synthulator\build\JUCE\ALL_BUILD.vcxproj">
       <Project>{C7844832-88A2-362D-83D0-F55D1FE9A55A}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

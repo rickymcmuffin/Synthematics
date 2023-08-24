@@ -56,12 +56,15 @@ token Lexer::number()
 	ret.value = 0;
 	ret.text = "";
 
+	bool hasSeenDot = false;
 	char c = expression[currentIndex];
 	int n = 0;
 	while (isdigit(c) || c == '.')
 	{
 		if(c == '.'){
-			ret.typ = numbersym;
+			if(hasSeenDot)
+				throw EquationException("Expected number", currentIndex);
+			hasSeenDot = true;
 		}
 		if (n >= MAX_IDENT_LENGTH)
 		{
@@ -76,6 +79,7 @@ token Lexer::number()
 
 	return ret;
 }
+
 
 token Lexer::next()
 {

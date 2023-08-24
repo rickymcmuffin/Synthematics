@@ -1,0 +1,10 @@
+^C:\USERS\RICKY\DOCUMENTS\PROJECTS\SYNTHULATOR\BUILD\CMAKEFILES\A38D1E03F732B0823A000FEF1CB930A8\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ricky/Documents/Projects/Synthulator -BC:/Users/ricky/Documents/Projects/Synthulator/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/ricky/Documents/Projects/Synthulator/build/GUI_APP_EXAMPLE.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

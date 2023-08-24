@@ -5,6 +5,9 @@
 // have called `juce_generate_juce_header(<thisTarget>)` in your CMakeLists.txt,
 // you could `#include <JuceHeader.h>` here instead, to make all your module headers visible.
 #include <juce_gui_extra/juce_gui_extra.h>
+#include "Parser/parser.h"
+#include "Parser/unparser.h"
+#include "Parser/unparseMath.h"
 // #include <JuceHeader.h>
 
 //==============================================================================
@@ -27,4 +30,6 @@ private:
     // Your private member variables go here...
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+
+    AST *expression;
 };

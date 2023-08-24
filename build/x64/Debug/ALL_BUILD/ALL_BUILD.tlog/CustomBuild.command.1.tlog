@@ -1,0 +1,10 @@
+^C:\USERS\RICKY\DOCUMENTS\PROJECTS\SYNTHULATOR\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ricky/Documents/Projects/Synthulator -BC:/Users/ricky/Documents/Projects/Synthulator/build --check-stamp-file C:/Users/ricky/Documents/Projects/Synthulator/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

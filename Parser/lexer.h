@@ -17,6 +17,7 @@ private:
 	void consumeIgnored();
 	token ident();
 	token number();
+	std::string afterDot();
 
 
 

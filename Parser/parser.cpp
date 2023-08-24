@@ -251,7 +251,14 @@ AST *Parser::parseSignedNumber()
 		eat(plussym);
 	}
 
-	int value = currentTok.value;
+	float value;
+
+	if(isNegative){
+		value = -currentTok.value;
+	} else {
+		value = currentTok.value;
+	}
+
 
 	eat(numbersym);
 	return ast_number(num, value);

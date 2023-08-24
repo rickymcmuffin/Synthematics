@@ -6,6 +6,7 @@
 #include "ast.h"
 #include "lexer.h"
 #include "token.h"
+#include "equationException.h"
 
 class Parser
 {

@@ -117,7 +117,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Parser\Debug\Parser.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -164,7 +164,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>-LTCG;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Parser\Release\Parser.lib;-LTCG;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -210,7 +210,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Parser\MinSizeRel\Parser.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -255,7 +255,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Parser\RelWithDebInfo\Parser.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_extra/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_gui_basics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_graphics/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_events/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_core/libs/VisualStudio2022/x64/MDd/$(Configuration);C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd;C:/Users/ricky/Documents/Projects/Synthulator/JUCE/modules/juce_data_structures/libs/VisualStudio2022/x64/MDd/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -398,6 +398,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\ricky\Documents\Projects\Synthulator\build\Parser\Parser.vcxproj">
+      <Project>{6496F36D-E492-3165-8345-746BB9A91D69}</Project>
+      <Name>Parser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

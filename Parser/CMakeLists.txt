@@ -1,4 +1,4 @@
-add_library(Parser STATIC 	ast.cpp
+add_library(Parser SHARED 	ast.cpp
 					 	equationException.cpp 
 						lexer.cpp 
 						parser.cpp 

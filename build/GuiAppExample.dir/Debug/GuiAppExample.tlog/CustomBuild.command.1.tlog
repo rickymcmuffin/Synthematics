@@ -1,0 +1,20 @@
+^C:\USERS\RICKY\DOCUMENTS\PROJECTS\SYNTHULATOR\BUILD\CMAKEFILES\8C31E596719FDEDFC23AF5DFFADF169C\RESOURCES.RC.RULE
+setlocal
+JUCE\tools\extras\Build\juceaide\juceaide_artefacts\Debug\juceaide.exe rcfile C:/Users/ricky/Documents/Projects/Synthulator/build/GuiAppExample_artefacts/JuceLibraryCode/Info.txt C:/Users/ricky/Documents/Projects/Synthulator/build/GuiAppExample_artefacts/JuceLibraryCode/resources.rc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\RICKY\DOCUMENTS\PROJECTS\SYNTHULATOR\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ricky/Documents/Projects/Synthulator -BC:/Users/ricky/Documents/Projects/Synthulator/build --check-stamp-file C:/Users/ricky/Documents/Projects/Synthulator/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

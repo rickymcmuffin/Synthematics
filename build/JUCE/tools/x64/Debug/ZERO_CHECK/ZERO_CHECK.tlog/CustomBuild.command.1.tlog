@@ -1,0 +1,10 @@
+^C:\USERS\RICKY\DOCUMENTS\PROJECTS\SYNTHULATOR\BUILD\JUCE\TOOLS\CMAKEFILES\A2B7E8ADAA1807B5FF909C4B137625CD\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ricky/Documents/Projects/Synthulator/JUCE -BC:/Users/ricky/Documents/Projects/Synthulator/build/JUCE/tools --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/ricky/Documents/Projects/Synthulator/build/JUCE/tools/JUCE.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

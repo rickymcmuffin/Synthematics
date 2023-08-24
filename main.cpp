@@ -1,57 +1,104 @@
-#include <iostream>
-#include <stdio.h>
-#include "equationException.h"
-#include "lexer.h"
-#include "parser.h"
-#include "unparser.h"
-#include "unparseMath.h"
+#include "MainComponent.h"
 
-using namespace std;
+#define JUCE_APPLICATION_NAME_STRING_COOL "GuiAppApplication"
+#define JUCE_APPLICATION_VERSION_STRING_COOL "1.0.0"
 
-int main()
+//==============================================================================
+class GuiAppApplication  : public juce::JUCEApplication
 {
+public:
+    //==============================================================================
+    GuiAppApplication() {}
 
-	// try
-	// {
-	// 	while (!l.isDone())
-	// 	{
-	// 		token t = l.next();
-	// 		cout << t.expression + " | " + to_string(t.index) + " | " + ttyp2str(t.typ) + " | " + t.text + " | " + to_string(t.value) + "\n";
-	// 	}
-	// }
-	// catch (EquationException e)
-	// {
-	// 	cout << e.what();
-	// }
+    // We inject these as compile definitions from the CMakeLists.txt
+    // If you've enabled the juce header with `juce_generate_juce_header(<thisTarget>)`
+    // you could `#include <JuceHeader.h>` and use `ProjectInfo::projectName` etc. instead.
+    const juce::String getApplicationName() override       { return JUCE_APPLICATION_NAME_STRING_COOL; }
+    const juce::String getApplicationVersion() override    { return JUCE_APPLICATION_VERSION_STRING_COOL; }
+    bool moreThanOneInstanceAllowed() override             { return true; }
 
-	// string s = "x*x + 2*(x+8)";
-	string s = "";
-	float xValue = 0;
-	cout << "Enter expression: ";
+    //==============================================================================
+    void initialise (const juce::String& commandLine) override
+    {
+        // This method is where you should put your application's initialisation code..
+        juce::ignoreUnused (commandLine);
 
-	getline(cin, s);
-	
-	cout << "Enter x Value: ";
+        mainWindow.reset (new MainWindow (getApplicationName()));
+    }
 
-	cin >> xValue;
+    void shutdown() override
+    {
+        // Add your application's shutdown code here..
 
-	try
-	{
-		Parser p = Parser(s);
+        mainWindow = nullptr; // (deletes our window)
+    }
 
-		AST *ast = p.parseExpression();
+    //==============================================================================
+    void systemRequestedQuit() override
+    {
+        // This is called when the app is being asked to quit: you can ignore this
+        // request and let the app carry on running, or call quit() to allow the app to close.
+        quit();
+    }
 
-		string unParsed = unparseExpression(ast);
+    void anotherInstanceStarted (const juce::String& commandLine) override
+    {
+        // When another instance of the app is launched while this one is running,
+        // this method is invoked, and the commandLine parameter tells you what
+        // the other instance's command-line arguments were.
+        juce::ignoreUnused (commandLine);
+    }
 
-		float result = resultExpression(ast, xValue);
-		cout << unParsed << endl;
+    //==============================================================================
+    /*
+        This class implements the desktop window that contains an instance of
+        our MainComponent class.
+    */
+    class MainWindow    : public juce::DocumentWindow
+    {
+    public:
+        explicit MainWindow (juce::String name)
+            : DocumentWindow (name,
+                              juce::Desktop::getInstance().getDefaultLookAndFeel()
+                                                          .findColour (ResizableWindow::backgroundColourId),
+                              DocumentWindow::allButtons)
+        {
+            setUsingNativeTitleBar (true);
+            setContentOwned (new MainComponent(), true);
 
-		cout << result << '\n';
-	} catch (EquationException e){
-		cout << e.what();
-	}
+           #if JUCE_IOS || JUCE_ANDROID
+            setFullScreen (true);
+           #else
+            setResizable (true, true);
+            centreWithSize (getWidth(), getHeight());
+           #endif
 
+            setVisible (true);
+        }
 
-	// cout << "bruh";
-	return 0;
-}
+        void closeButtonPressed() override
+        {
+            // This is called when the user tries to close this window. Here, we'll just
+            // ask the app to quit when this happens, but you can change this to do
+            // whatever you need.
+            JUCEApplication::getInstance()->systemRequestedQuit();
+        }
+
+        /* Note: Be careful if you override any DocumentWindow methods - the base
+           class uses a lot of them, so by overriding you might break its functionality.
+           It's best to do all your work in your content component instead, but if
+           you really have to override any DocumentWindow methods, make sure your
+           subclass also calls the superclass's method.
+        */
+
+    private:
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+    };
+
+private:
+    std::unique_ptr<MainWindow> mainWindow;
+};
+
+//==============================================================================
+// This macro generates the main() routine that launches the app.
+START_JUCE_APPLICATION (GuiAppApplication)

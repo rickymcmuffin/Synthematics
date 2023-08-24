@@ -1,5 +1,6 @@
 /* $Id: ast.c,v 1.9 2023/03/23 05:36:03 leavens Exp $ */
 #include <stdlib.h>
+#include <cstring>
 #include "equationException.h"
 #include "ast.h"
 
@@ -18,6 +19,7 @@ static AST *ast_allocate(unsigned int ind)
     }
     ret->index = ind;
     ret->next = NULL;
+
     return ret;
 }
 
@@ -83,7 +85,9 @@ AST *ast_ident(token t, std::string str)
 {
     AST *ret = ast_allocate(t.index);
     ret->type_tag = ident_ast;
-    ret->data.ident.name = str;
+    char *arr = new char[str.length() + 1];
+    strcpy(arr, str.c_str());
+    ret->data.ident.name = arr;
     return ret;
 }
 

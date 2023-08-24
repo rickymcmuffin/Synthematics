@@ -98,7 +98,7 @@ typedef struct
 typedef struct
 {
     // name of a constant or variable
-    std::string name;
+    const char *name;
 } ident_t;
 
 // E ::= n
@@ -149,7 +149,7 @@ extern AST *ast_func_call(token t, AST *ident, AST_list param);
 
 // Return a (pointer to a) fresh AST for an ident expression
 // with the given name.
-extern AST *ast_ident(token t, std::string name);
+extern AST *ast_ident(token t, std::string str);
 
 // Return a (pointer to a) fresh AST for an (signed) number expression
 // with the given value

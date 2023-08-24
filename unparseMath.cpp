@@ -68,8 +68,9 @@ float resultFuncCall(AST *funcCall)
 
 float resultIdent(AST *ident)
 {
-	if(ident->data.ident.name != "x"){
-		throw EquationException("Unknown variable: " + ident->data.ident.name, ident->index);
+	string str(ident->data.ident.name);
+	if(str != "x"){
+		throw EquationException("Unknown variable: " + str, ident->index);
 	}
 
 	return xValue;

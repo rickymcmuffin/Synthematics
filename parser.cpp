@@ -164,6 +164,7 @@ AST *Parser::parseFactor()
 		if (currentTok.typ != lparensym)
 		{
 			return iden;
+			break;
 		}
 		AST_list params = parseParameters();
 		return ast_func_call(idt, iden, params);

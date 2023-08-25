@@ -7,6 +7,8 @@
 MainComponent::MainComponent()
 {
     setSize(600, 400);
+    setAudioChannels(0, 2);
+
     Parser p = Parser("1-x*x");
     MainComponent::expression = p.parseExpression();
 }
@@ -15,7 +17,7 @@ MainComponent::MainComponent()
 void MainComponent::paint(juce::Graphics &g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //g.fillAll (juce::Colours::white);
+    // g.fillAll (juce::Colours::white);
     //  g.fillRect(30, 30, 0, 0);
     // g.setFont (juce::Font (16.0f));
     // g.setColour (juce::Colours::black);
@@ -36,8 +38,6 @@ void MainComponent::paint(juce::Graphics &g)
     catch (EquationException e)
     {
         g.drawText(e.what(), getLocalBounds(), juce::Justification::top, true);
-
-
     }
 }
 
@@ -46,4 +46,17 @@ void MainComponent::resized()
     // This is called when the MainComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+}
+
+void MainComponent::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
+{
+    // to be filled
+}
+
+void MainComponent::releaseResources() {
+    // to be filled 2
+}
+void MainComponent::getNextAudioBlock(const juce::AudioSourceChannelInfo &bufferToFill){
+
+    // to be filled 3
 }

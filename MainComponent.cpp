@@ -1,8 +1,5 @@
 #include "MainComponent.h"
 
-#define WIDTH 600
-#define HEIGHT 400
-
 //==============================================================================
 MainComponent::MainComponent()
 {
@@ -23,14 +20,16 @@ void MainComponent::paint(juce::Graphics &g)
 
     try
     {
-        float lastYVal = resultExpression(expression, 0);
+        float firstYVal = resultExpression(expression, 0);
         g.drawText(unparseExpression(expression), getLocalBounds(), juce::Justification::bottom, true);
-        for (float x = 0.01; x <= 1.00; x += 0.01)
-        {
-            float yVal = resultExpression(expression, x);
-            g.drawLine(WIDTH * (x - 0.01), HEIGHT * (1 - lastYVal), WIDTH * (x), HEIGHT * (1 - yVal), 1);
+        float interval = 0.01f;
 
-            lastYVal = yVal;
+        for (float x = 0; x < 1; x += interval)
+        {
+            float newYVal = resultExpression(expression, x + interval);
+            g.drawLine(getWidth() * x, getHeight() * (1 - firstYVal), getWidth() * (x + interval), getHeight() * (1 - newYVal), 1);
+
+            firstYVal = newYVal;
         }
     }
     catch (EquationException e)

@@ -5,35 +5,31 @@
 // have called `juce_generate_juce_header(<thisTarget>)` in your CMakeLists.txt,
 // you could `#include <JuceHeader.h>` here instead, to make all your module headers visible.
 #include <juce_gui_extra/juce_gui_extra.h>
-#include <juce_audio_utils/juce_audio_utils.h>
 #include "Parser/parser.h"
 #include "Parser/unparser.h"
 #include "Parser/unparseMath.h"
+// #include <JuceHeader.h>
 
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent : public juce::AudioAppComponent
+class MainComponent   : public juce::Component
 {
 public:
     //==============================================================================
     MainComponent();
 
     //==============================================================================
-    void paint(juce::Graphics &) override;
+    void paint (juce::Graphics&) override;
     void resized() override;
-
-    void prepareToPlay(int samplesPerBlockExpected, double sampleRate) override;
-    void releaseResources() override;
-    void getNextAudioBlock(const juce::AudioSourceChannelInfo &bufferToFill) override;
 
 private:
     //==============================================================================
     // Your private member variables go here...
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 
     AST *expression;
 };

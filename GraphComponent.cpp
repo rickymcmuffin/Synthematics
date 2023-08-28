@@ -1,18 +1,25 @@
-#include "MainComponent.h"
+#include "GraphComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent()
+GraphComponent::GraphComponent()
 {
     setSize(600, 400);
     Parser p = Parser("1-x*x");
-    MainComponent::expression = p.parseExpression();
+    GraphComponent::expression = p.parseExpression();
+
+    xMin = -1;
+    xMax = 1;
+    yMin = -1;
+    yMax = 1;
+
+    
 }
 
 //==============================================================================
-void MainComponent::paint(juce::Graphics &g)
+void GraphComponent::paint(juce::Graphics &g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //g.fillAll (juce::Colours::white);
+    g.fillAll (juce::Colours::white);
     //  g.fillRect(30, 30, 0, 0);
     // g.setFont (juce::Font (16.0f));
     // g.setColour (juce::Colours::black);
@@ -40,9 +47,9 @@ void MainComponent::paint(juce::Graphics &g)
     }
 }
 
-void MainComponent::resized()
+void GraphComponent::resized()
 {
-    // This is called when the MainComponent is resized.
+    // This is called when the GraphComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
 }

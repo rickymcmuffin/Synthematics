@@ -1,6 +1,6 @@
 #include "Parser/parser.h"
 #include "Parser/unparser.h"
-#include "MainComponent.h"
+#include "GraphComponent.h"
 #include <iostream>
 
 #define JUCE_APPLICATION_NAME_STRING_COOL "GuiAppApplication"
@@ -56,7 +56,7 @@ public:
     //==============================================================================
     /*
         This class implements the desktop window that contains an instance of
-        our MainComponent class.
+        our GraphComponent class.
     */
     class MainWindow    : public juce::DocumentWindow
     {
@@ -68,7 +68,7 @@ public:
                               DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainComponent(), true);
+            setContentOwned (new GraphComponent(), true);
 
            #if JUCE_IOS || JUCE_ANDROID
             setFullScreen (true);

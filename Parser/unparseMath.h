@@ -11,6 +11,8 @@ float resultBinExpr(AST *binExpr);
 
 float resultFuncCall(AST *funcCall);
 
+float resultSin(AST *sinFunc);
+
 float resultIdent(AST *ident);
 
 float resultNum(AST *num);

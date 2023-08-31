@@ -1,12 +1,12 @@
 #include "unparseMath.h"
 #include "equationException.h"
+#include <cmath>
 
 float xValue;
 
 float resultExpression(AST *expression, float xVal)
 {
 	xValue = xVal;
-
 
 	return resultExpr(expression);
 }
@@ -57,19 +57,36 @@ float resultBinExpr(AST *binExpr)
 		break;
 	}
 
-
 	return res;
 }
 
 float resultFuncCall(AST *funcCall)
 {
+
+	switch (funcCall->data.func_call.func)
+	{
+	case sin_f:
+		return resultSin(funcCall);
+		break;
+	default:
+		throw EquationException("Unrecognized function", funcCall->index);
+	}
 	return 0;
+}
+
+float resultSin(AST *sinFunc){
+	AST *param = ast_list_first(sinFunc->data.func_call.parameters);
+	float exprResult = resultExpr(sinFunc->data.func_call.parameters);
+
+	return sin(exprResult);
+
 }
 
 float resultIdent(AST *ident)
 {
 	string str(ident->data.ident.name);
-	if(str != "x"){
+	if (str != "x")
+	{
 		throw EquationException("Unknown variable: " + str, ident->index);
 	}
 

@@ -85,8 +85,17 @@ typedef struct
     AST *rightexp;
 } bin_expr_t;
 
+typedef enum {
+    sin_f,
+    cos_f,
+    sign_f,
+    pow_f
+    
+} func_name;
+
 typedef struct
 {
+    func_name func;
     AST *identifier;
     AST_list parameters;
 } func_call_t;
@@ -145,7 +154,7 @@ extern AST *ast_bin_expr(token t, AST *e1, bin_arith_op arith_op, AST *e2);
 
 // Return a (pointer to a) fresh AST for a function call
 // with function identifier AST ident and list of parameters.
-extern AST *ast_func_call(token t, AST *ident, AST_list param);
+extern AST *ast_func_call(token t, func_name func, AST *ident, AST_list param);
 
 // Return a (pointer to a) fresh AST for an ident expression
 // with the given name.

@@ -59,6 +59,7 @@ void Parser::eat(token_type tt)
 
 AST *Parser::parseExpression()
 {
+
 	token fst = currentTok;
 	AST *trm = parseTerm();
 	AST *exp = trm;
@@ -166,8 +167,7 @@ AST *Parser::parseFactor()
 			return iden;
 			break;
 		}
-		AST_list params = parseParameters();
-		return ast_func_call(idt, iden, params);
+		return parseFunction(idt, iden);
 		break;
 	}
 	case lparensym:
@@ -195,6 +195,25 @@ AST *Parser::parseFactor()
 	return (AST *)NULL;
 }
 
+AST *Parser::parseFunction(token idt, AST *iden)
+{
+	func_name func;
+	string funcString = idt.text;
+	cout << "parseFunc" << endl;
+	if (funcString.compare("sin") == 0)
+	{
+
+		cout << "parseSin" << endl;
+		func = sin_f;
+	}
+	else
+	{
+		throw EquationException("unknown function name", idt.index);
+	}
+	AST_list params = parseParameters();
+	return ast_func_call(idt, func, iden, params);
+}
+
 AST_list Parser::parseParameters()
 {
 	eat(lparensym);
@@ -204,6 +223,7 @@ AST_list Parser::parseParameters()
 	{
 		params = ast_list_singleton(parseExpression());
 		AST_list rest = parseCommaParameters();
+		ast_list_splice(params, rest);
 	}
 
 	eat(rparensym);
@@ -253,12 +273,14 @@ AST *Parser::parseSignedNumber()
 
 	float value;
 
-	if(isNegative){
+	if (isNegative)
+	{
 		value = -currentTok.value;
-	} else {
+	}
+	else
+	{
 		value = currentTok.value;
 	}
-
 
 	eat(numbersym);
 	return ast_number(num, value);

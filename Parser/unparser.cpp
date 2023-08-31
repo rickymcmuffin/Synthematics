@@ -1,4 +1,8 @@
 #include "unparser.h"
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
 
 std::string unparseExpression(AST *ast)
 {
@@ -96,10 +100,14 @@ void unparseParameters(AST_list al, std::string *s){
 
 void unparseIdent(AST *ast, std::string *s)
 {
+
 	*s += ast->data.ident.name;
 }
 
 void unparseNum(AST *ast, std::string *s)
 {
-	*s += std::to_string(ast->data.number.value);
+	std::stringstream stream;
+	stream << std::setprecision(3) << ast->data.number.value; 
+	*s += stream.str();
+	// *s += std::to_string( ast->data.number.value);
 }

@@ -15,21 +15,24 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class GraphComponent   : public juce::Component
+class GraphComponent : public juce::Component
 {
 public:
     //==============================================================================
     GraphComponent();
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics &) override;
     void resized() override;
 
 private:
     //==============================================================================
     // Your private member variables go here...
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GraphComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphComponent)
+
+    float getXPixel(float xVal);
+    float getYPixel(float yVal);
 
     AST *expression;
     float xMin;

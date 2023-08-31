@@ -46,6 +46,8 @@ private:
 	// <factor> ::= <ident> | <paren-expr> | <signed-number>
 	AST *parseFactor();
 
+	AST *parseFunction(token idt, AST *ident);
+
 	// <ident> ( <parameters> )
 	AST *parseParameters();
 

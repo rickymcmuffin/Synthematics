@@ -3,14 +3,17 @@
 //==============================================================================
 GraphComponent::GraphComponent()
 {
+
+
+    
     setSize(600, 400);
-    Parser p = Parser("sin(x)");
+    Parser p = Parser("sin(2*4*3.14*x)");
     GraphComponent::expression = p.parseExpression();
 
-    xMin = -10;
-    xMax = 10;
-    yMin = -2;
-    yMax = 2;
+    xMin = 0;
+    xMax = 1;
+    yMin = -1;
+    yMax = 1;
 }
 
 //==============================================================================
@@ -35,7 +38,7 @@ void GraphComponent::paint(juce::Graphics &g)
         g.setColour(juce::Colours::blueviolet);
         float firstYVal = resultExpression(expression, xMin);
         // g.drawText(unparseExpression(expression), getLocalBounds(), juce::Justification::bottom, true);
-        float interval = 0.1f;
+        float interval = 0.01f;
 
         for (float x = xMin; x < xMax; x += interval)
         {
@@ -50,7 +53,6 @@ void GraphComponent::paint(juce::Graphics &g)
 
         g.setColour(juce::Colours::black);
         g.drawText(unparseExpression(expression), getLocalBounds(), juce::Justification::topLeft, true);
-
 
         stringstream stream;
 
@@ -86,4 +88,5 @@ void GraphComponent::resized()
     // This is called when the GraphComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+
 }

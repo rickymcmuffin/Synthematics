@@ -1,17 +1,17 @@
 #include "Parser/parser.h"
 #include "Parser/unparser.h"
-#include "GraphComponent.h"
+#include "MainComponent.h"
 #include <iostream>
 
-#define JUCE_APPLICATION_NAME_STRING_COOL "GuiAppApplication"
+#define JUCE_APPLICATION_NAME_STRING_COOL "Synthematics"
 #define JUCE_APPLICATION_VERSION_STRING_COOL "1.0.0"
 
 //==============================================================================
-class GuiAppApplication  : public juce::JUCEApplication
+class Synthematics  : public juce::JUCEApplication
 {
 public:
     //==============================================================================
-    GuiAppApplication() {}
+    Synthematics() {}
 
     // We inject these as compile definitions from the CMakeLists.txt
     // If you've enabled the juce header with `juce_generate_juce_header(<thisTarget>)`
@@ -68,7 +68,7 @@ public:
                               DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (new GraphComponent(), true);
+            setContentOwned (new MainComponent(), true);
 
            #if JUCE_IOS || JUCE_ANDROID
             setFullScreen (true);
@@ -105,4 +105,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (GuiAppApplication)
+START_JUCE_APPLICATION (Synthematics)

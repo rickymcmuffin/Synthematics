@@ -39,4 +39,5 @@ private:
     float xMax;
     float yMin;
     float yMax;
+
 };

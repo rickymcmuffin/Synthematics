@@ -4,16 +4,30 @@
 
 double xValue;
 
+double fValue;
+
 double resultExpression(AST *expression, double xVal)
 {
+	return resultExpression(expression, xVal, 1);
+}
+
+double resultExpression(AST *expression)
+{
+	return resultExpression(expression, 1, 1);
+}
+double resultExpression(AST *expression, double xVal, double fVal)
+{
+
 	xValue = xVal;
+	fValue = fVal;
 
 	return resultExpr(expression);
 }
 
 double resultExpr(AST *expr)
 {
-	if(expr == NULL){
+	if (expr == NULL)
+	{
 		return 0;
 	}
 	double res = 0;
@@ -79,23 +93,29 @@ double resultFuncCall(AST *funcCall)
 	return 0;
 }
 
-double resultSin(AST *sinFunc){
+double resultSin(AST *sinFunc)
+{
 	AST *param = ast_list_first(sinFunc->data.func_call.parameters);
 	double exprResult = resultExpr(sinFunc->data.func_call.parameters);
 
 	return sin(exprResult);
-
 }
 
 double resultIdent(AST *ident)
 {
 	string str(ident->data.ident.name);
-	if (str != "x")
+	if (str.compare("x"))
+	{
+		return xValue;
+	}
+	else if (str.compare("f"))
+	{
+		return fValue;
+	}
+	else
 	{
 		throw EquationException("Unknown variable: " + str, ident->index);
 	}
-
-	return xValue;
 }
 
 double resultNum(AST *num)

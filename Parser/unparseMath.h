@@ -4,6 +4,8 @@
 
 
 double resultExpression(AST *expression, double xValue);
+double resultExpression(AST *expression);
+double resultExpression(AST *expression, double xValue, double fValue);
 
 double resultExpr(AST *expr);
 

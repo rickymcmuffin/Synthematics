@@ -1,14 +1,15 @@
 #pragma once
 
 #include <juce_audio_processors/juce_audio_processors.h>
+#include "Parser/ast.h"
 
 //==============================================================================
-class AudioPluginAudioProcessor  : public juce::AudioProcessor
+class MainSynth  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    AudioPluginAudioProcessor();
-    ~AudioPluginAudioProcessor() override;
+    MainSynth();
+    ~MainSynth() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -42,7 +43,13 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    void setExpression(AST *expr);
+    
+
 private:
+    AST *expression;
+	double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
+    juce::Random random;
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainSynth)
 };

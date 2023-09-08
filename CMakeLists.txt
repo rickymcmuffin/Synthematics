@@ -44,8 +44,8 @@ juce_add_plugin(Synthematics
     # ICON_SMALL ...
     # DOCUMENT_EXTENSIONS ...           # Specify file extensions that should be associated with this app
     # COMPANY_NAME ...                  # Specify the name of the app's author
-    PLUGIN_MANUFACTURER_CODE Juce               # A four-character manufacturer id with at least one upper-case character
-    PLUGIN_CODE Dem0                            # A unique four-character plugin id with exactly one upper-case character
+    PLUGIN_MANUFACTURER_CODE Grot               # A four-character manufacturer id with at least one upper-case character
+    PLUGIN_CODE Math                            # A unique four-character plugin id with exactly one upper-case character
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
     FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
     PRODUCT_NAME "Synthematics")     # The name of the final executable, which can differ from the target name
@@ -65,10 +65,9 @@ juce_add_plugin(Synthematics
 
 target_sources(Synthematics
     PRIVATE
-        Main.cpp
+        MainSynth.cpp
         GraphComponent.cpp
-        MainComponent.cpp
-        Synth.cpp)
+        MainEditor.cpp)
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use
@@ -83,7 +82,7 @@ target_compile_definitions(Synthematics
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_gui_app` call
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_gui_app` call
         JUCE_VST3_CAN_REPLACE_VST2=0
-        JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1
+        # JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1
         JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:Synthematics,JUCE_PRODUCT_NAME>"
         JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:Synthematics,JUCE_VERSION>")
 

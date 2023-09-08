@@ -2,6 +2,8 @@
 #include "equationException.h"
 #include <cmath>
 
+using namespace std;
+
 double xValue;
 
 double fValue;
@@ -104,11 +106,11 @@ double resultSin(AST *sinFunc)
 double resultIdent(AST *ident)
 {
 	string str(ident->data.ident.name);
-	if (str.compare("x"))
+	if (str.compare("x") == 0)
 	{
 		return xValue;
 	}
-	else if (str.compare("f"))
+	else if (str.compare("f") == 0)
 	{
 		return fValue;
 	}

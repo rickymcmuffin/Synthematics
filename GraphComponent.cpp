@@ -1,5 +1,6 @@
 #include "GraphComponent.h"
 
+using namespace std;
 //==============================================================================
 GraphComponent::GraphComponent()
 {

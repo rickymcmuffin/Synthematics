@@ -94,7 +94,7 @@ void MainSynth::prepareToPlay(double sampleRate, int samplesPerBlock)
     // initialisation that you need..
     juce::ignoreUnused(sampleRate, samplesPerBlock);
     MainSynth::xDelta = 1 / sampleRate;
-    cout << xDelta<<endl;
+    std::cout << xDelta<<std::endl;
 }
 
 void MainSynth::releaseResources()
@@ -158,12 +158,13 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
         double xStart = xCurrent;
         for (auto sample = 0; sample < buffer.getNumSamples(); sample++)
         {
-            // cout << buffer.getNumSamples() << " " << sample<<endl;
+            try{
             xCurrent += xDelta;
             double res = resultExpression(expression, xCurrent) * 0.125;
-            // cout << res << " " << (xCurrent-xStart) << " " << xDelta << endl;
-            // cout << buffer.getNumSamples() << " " << sample<< " " << res <<endl;
             channelData[sample] = (float)res;
+            } catch(EquationException e){
+                channelData[sample] = 0;
+            }
         }
         if(channel < totalNumOutputChannels - 1)
             xCurrent = xStart;

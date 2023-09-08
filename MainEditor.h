@@ -21,7 +21,12 @@ private:
 
     GraphComponent graph;
 
+    juce::Label expressionInput;
+    juce::Label yEqualsLabel;
+
     AST *expression;
+
+    void setExpressionText(juce::String expr);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainEditor)
 };

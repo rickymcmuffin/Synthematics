@@ -4,18 +4,17 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
 
-class EquationException : public exception
+class EquationException : public std::exception
 {
 private:
-	string message;
+	std::string message;
 	int index;
 
 public:
 
-	EquationException(string msg, int index);
-	string what();
+	EquationException(std::string msg, int index);
+	std::string what();
 };
 
 #endif

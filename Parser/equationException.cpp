@@ -9,8 +9,8 @@ EquationException::EquationException(std::string msg, int index)
 
 std::string EquationException::what()
 {
-	string ret = message + " at index " + to_string(index);
+	std::string ret = message + " at index " + std::to_string(index);
 	
-	return string(ret);
+	return std::string(ret);
 
 }

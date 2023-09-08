@@ -42,7 +42,7 @@ void GraphComponent::paint(juce::Graphics &g)
         // g.drawText(unparseExpression(expression), getLocalBounds(), juce::Justification::bottom, true);
         double interval = (xMax - xMin)/getWidth();
 
-        for (float x = xMin; x < xMax; x += interval)
+        for (double x = xMin; x < xMax; x += interval)
         {
 
             double newYVal = resultExpression(expression, x + interval);
@@ -71,16 +71,16 @@ void GraphComponent::paint(juce::Graphics &g)
     }
 }
 
-float GraphComponent::getXPixel(float xVal)
+float GraphComponent::getXPixel(double xVal)
 {
-    float ret = (xVal*1.0f - xMin) / (xMax - xMin);
+    float ret = (float)((xVal*1.0f - xMin) / (xMax - xMin));
 
     return getWidth() * ret;
 }
 
 float GraphComponent::getYPixel(double yVal)
 {
-    float ret = (yVal - yMin) / (yMax - yMin);
+    float ret = (float)((yVal - yMin) / (yMax - yMin));
 
     return getHeight() * (1 - ret);
 }

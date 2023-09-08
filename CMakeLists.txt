@@ -43,7 +43,7 @@ juce_add_plugin(Synthematics
     # ICON_BIG ...                      # ICON_* arguments specify a path to an image file to use as an icon
     # ICON_SMALL ...
     # DOCUMENT_EXTENSIONS ...           # Specify file extensions that should be associated with this app
-    # COMPANY_NAME ...                  # Specify the name of the app's author
+    COMPANY_NAME "GriotVerse"                 # Specify the name of the app's author
     PLUGIN_MANUFACTURER_CODE Grot               # A four-character manufacturer id with at least one upper-case character
     PLUGIN_CODE Math                            # A unique four-character plugin id with exactly one upper-case character
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case

@@ -163,7 +163,7 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
             double res = resultExpression(expression, xCurrent) * 0.125;
             // cout << res << " " << (xCurrent-xStart) << " " << xDelta << endl;
             // cout << buffer.getNumSamples() << " " << sample<< " " << res <<endl;
-            channelData[sample] = res;
+            channelData[sample] = (float)res;
         }
         if(channel < totalNumOutputChannels - 1)
             xCurrent = xStart;

@@ -35,7 +35,7 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphComponent)
 
-    float getXPixel(float xVal);
+    float getXPixel(double xVal);
     float getYPixel(double yVal);
 
     AST *expression;

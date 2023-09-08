@@ -3,18 +3,18 @@
 #include "ast.h"
 
 
-float resultExpression(AST *expression, float xValue);
+double resultExpression(AST *expression, double xValue);
 
-float resultExpr(AST *expr);
+double resultExpr(AST *expr);
 
-float resultBinExpr(AST *binExpr);
+double resultBinExpr(AST *binExpr);
 
-float resultFuncCall(AST *funcCall);
+double resultFuncCall(AST *funcCall);
 
-float resultSin(AST *sinFunc);
+double resultSin(AST *sinFunc);
 
-float resultIdent(AST *ident);
+double resultIdent(AST *ident);
 
-float resultNum(AST *num);
+double resultNum(AST *num);
 
 #endif

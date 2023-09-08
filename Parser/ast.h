@@ -113,7 +113,7 @@ typedef struct
 // E ::= n
 typedef struct
 {
-    float value;
+    double value;
 } number_t;
 
 // The actual AST definition:
@@ -162,7 +162,7 @@ extern AST *ast_ident(token t, std::string str);
 
 // Return a (pointer to a) fresh AST for an (signed) number expression
 // with the given value
-extern AST *ast_number(token t, float value);
+extern AST *ast_number(token t, double value);
 
 // Return an AST list that is empty
 extern AST_list ast_list_empty_list();

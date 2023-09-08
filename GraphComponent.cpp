@@ -5,10 +5,12 @@ GraphComponent::GraphComponent()
 {
 
 
+    GraphComponent::expression = NULL;
     
     setSize(600, 400);
-    Parser p = Parser("sin(2*4*3.14*x)");
-    GraphComponent::expression = p.parseExpression();
+    // GraphComponent::expression = p.parseExpression();
+
+    // GraphComponent::expression = expression;
 
     xMin = 0;
     xMax = 1;
@@ -28,22 +30,22 @@ void GraphComponent::paint(juce::Graphics &g)
 
     g.setColour(juce::Colours::grey);
 
-    g.drawLine(getXPixel(0), 0, getXPixel(0), getHeight() * 1.0f);
-    g.drawLine(0, getYPixel(0), getWidth() * 1.0f, getYPixel(0));
+    g.drawLine(getXPixel(0)*1.0f, 0, getXPixel(0)*1.0f, getHeight()*1.0f);
+    g.drawLine(0, getYPixel(0), getWidth()*1.0f, getYPixel(0));
 
-    // float xPrecision = (xMax - xMin) / 10;
+    // double xPrecision = (xMax - xMin) / 10;
 
     try
     {
         g.setColour(juce::Colours::blueviolet);
-        float firstYVal = resultExpression(expression, xMin);
+        double firstYVal = resultExpression(expression, xMin);
         // g.drawText(unparseExpression(expression), getLocalBounds(), juce::Justification::bottom, true);
-        float interval = 0.01f;
+        double interval = (xMax - xMin)/getWidth();
 
         for (float x = xMin; x < xMax; x += interval)
         {
 
-            float newYVal = resultExpression(expression, x + interval);
+            double newYVal = resultExpression(expression, x + interval);
             // cout << "x: " << x <<", y: " << newYVal<<endl;
 
             g.drawLine(getXPixel(x), getYPixel(firstYVal), getXPixel(x + interval), getYPixel(newYVal), 2);
@@ -71,12 +73,12 @@ void GraphComponent::paint(juce::Graphics &g)
 
 float GraphComponent::getXPixel(float xVal)
 {
-    float ret = (xVal - xMin) / (xMax - xMin);
+    float ret = (xVal*1.0f - xMin) / (xMax - xMin);
 
     return getWidth() * ret;
 }
 
-float GraphComponent::getYPixel(float yVal)
+float GraphComponent::getYPixel(double yVal)
 {
     float ret = (yVal - yMin) / (yMax - yMin);
 
@@ -89,4 +91,8 @@ void GraphComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
 
+}
+
+void GraphComponent::setExpression(AST *ast){
+    GraphComponent::expression = ast;
 }

@@ -95,7 +95,7 @@ AST *ast_ident(token t, std::string str)
 
 // Return a (pointer to a) fresh AST for an (signed) number expression
 // with the given value
-AST *ast_number(token t, float value)
+AST *ast_number(token t, double value)
 {
     AST *ret = ast_allocate(t.index);
     ret->type_tag = number_ast;

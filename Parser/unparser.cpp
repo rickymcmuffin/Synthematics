@@ -16,6 +16,9 @@ std::string unparseExpression(AST *ast)
 
 void unparseExpr(AST *ast, std::string *s)
 {
+	if(ast == NULL){
+		return;
+	}
 	switch (ast->type_tag)
 	{
 	case bin_expr_ast:
@@ -29,6 +32,8 @@ void unparseExpr(AST *ast, std::string *s)
 		break;
 	case number_ast:
 		unparseNum(ast, s);
+		break;
+	default:
 		break;
 	}
 }

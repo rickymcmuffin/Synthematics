@@ -2,19 +2,21 @@
 #include "equationException.h"
 #include <cmath>
 
-float xValue;
+double xValue;
 
-float resultExpression(AST *expression, float xVal)
+double resultExpression(AST *expression, double xVal)
 {
 	xValue = xVal;
 
 	return resultExpr(expression);
 }
 
-float resultExpr(AST *expr)
+double resultExpr(AST *expr)
 {
-
-	float res = 0;
+	if(expr == NULL){
+		return 0;
+	}
+	double res = 0;
 	switch (expr->type_tag)
 	{
 	case bin_expr_ast:
@@ -29,18 +31,21 @@ float resultExpr(AST *expr)
 	case number_ast:
 		res = resultNum(expr);
 		break;
+	default:
+		res = 0;
+		break;
 	}
 
 	return res;
 }
 
-float resultBinExpr(AST *binExpr)
+double resultBinExpr(AST *binExpr)
 {
-	float left = resultExpr(binExpr->data.bin_expr.leftexp);
+	double left = resultExpr(binExpr->data.bin_expr.leftexp);
 
-	float right = resultExpr(binExpr->data.bin_expr.rightexp);
+	double right = resultExpr(binExpr->data.bin_expr.rightexp);
 
-	float res = 0;
+	double res = 0;
 	switch (binExpr->data.bin_expr.arith_op)
 	{
 	case addop:
@@ -60,7 +65,7 @@ float resultBinExpr(AST *binExpr)
 	return res;
 }
 
-float resultFuncCall(AST *funcCall)
+double resultFuncCall(AST *funcCall)
 {
 
 	switch (funcCall->data.func_call.func)
@@ -74,15 +79,15 @@ float resultFuncCall(AST *funcCall)
 	return 0;
 }
 
-float resultSin(AST *sinFunc){
+double resultSin(AST *sinFunc){
 	AST *param = ast_list_first(sinFunc->data.func_call.parameters);
-	float exprResult = resultExpr(sinFunc->data.func_call.parameters);
+	double exprResult = resultExpr(sinFunc->data.func_call.parameters);
 
 	return sin(exprResult);
 
 }
 
-float resultIdent(AST *ident)
+double resultIdent(AST *ident)
 {
 	string str(ident->data.ident.name);
 	if (str != "x")
@@ -93,7 +98,7 @@ float resultIdent(AST *ident)
 	return xValue;
 }
 
-float resultNum(AST *num)
+double resultNum(AST *num)
 {
 	return num->data.number.value;
 }

@@ -271,7 +271,7 @@ AST *Parser::parseSignedNumber()
 		eat(plussym);
 	}
 
-	float value;
+	double value;
 
 	if (isNegative)
 	{

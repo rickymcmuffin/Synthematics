@@ -59,6 +59,7 @@ void Parser::eat(token_type tt)
 
 AST *Parser::parseExpression()
 {
+	cout << "parsing expr"<<endl;
 
 	token fst = currentTok;
 	AST *trm = parseTerm();
@@ -226,13 +227,17 @@ AST_list Parser::parseParameters()
 		ast_list_splice(params, rest);
 	}
 
+
+	cout << "before"<<endl;
 	eat(rparensym);
+	cout << "after"<<endl;
 
 	return params;
 }
 
 AST_list Parser::parseCommaParameters()
 {
+	cout << "parsing comma param"<<endl;
 	AST_list ret = ast_list_empty_list();
 	AST_list last = ast_list_empty_list();
 	while (currentTok.typ == commasym)

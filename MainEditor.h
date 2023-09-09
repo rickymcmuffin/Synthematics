@@ -23,6 +23,7 @@ private:
 
     juce::Label expressionInput;
     juce::Label yEqualsLabel;
+    juce::Label errorLabel;
 
     AST *expression;
 

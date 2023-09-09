@@ -70,6 +70,9 @@ void GraphComponent::paint(juce::Graphics &g)
     {
         g.drawText(e.what(), getLocalBounds(), juce::Justification::top, true);
     }
+    catch (std::exception e){
+        g.drawText(e.what(), getLocalBounds(), juce::Justification::top, true);
+    }
 }
 
 float GraphComponent::getXPixel(double xVal)

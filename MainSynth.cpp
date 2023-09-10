@@ -150,32 +150,38 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumOutputChannels; ++channel)
+    // float **channelDatas = (float **)calloc(totalNumOutputChannels, sizeof(float *));
+    // for (int channel = 0; channel < totalNumOutputChannels; ++channel)
+    // {
+    //     channelDatas[channel] = buffer.getWritePointer(channel);
+    // }
+    for (auto sample = 0; sample < buffer.getNumSamples(); sample++)
     {
-        auto *channelData = buffer.getWritePointer(channel);
-        juce::ignoreUnused(channelData);
-        // ..do something to the data...
-        double xStart = xCurrent;
-        for (auto sample = 0; sample < buffer.getNumSamples(); sample++)
+        double res = 0;
+        try
         {
-            try
+            xCurrent += xDelta;
+            res = resultExpression(expression, xCurrent);
+            if (res < -1)
             {
-                xCurrent += xDelta;
-                double res = resultExpression(expression, xCurrent) * 0.125;
-                channelData[sample] = (float)res;
+                res = -1;
             }
-            catch (EquationException e)
+            else if (1 < res)
             {
-                channelData[sample] = 0;
-            }
-            catch (std::exception e)
-            {
-                channelData[sample] = 0;
+                res = 1;
             }
         }
-        if (channel < totalNumOutputChannels - 1)
-            xCurrent = xStart;
+        catch (EquationException e)
+        {
+            res = 0;
+        }
+        for (int channel = 0; channel < totalNumOutputChannels; ++channel)
+        {
+            auto *channelData = buffer.getWritePointer(channel);
+            channelData[sample] = (float)res;
+        }
     }
+    // free(channelDatas);
 }
 
 //==============================================================================
@@ -215,4 +221,5 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 void MainSynth::setExpression(AST *expr)
 {
     MainSynth::expression = expr;
+    xCurrent = 0;
 }

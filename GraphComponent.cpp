@@ -99,4 +99,5 @@ void GraphComponent::resized()
 
 void GraphComponent::setExpression(AST *ast){
     GraphComponent::expression = ast;
+    repaint();
 }

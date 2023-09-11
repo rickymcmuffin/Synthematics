@@ -20,12 +20,12 @@ sin(f*2*3.14*x)
 
 ### Sawtooth wave
 ```
-2*f*(mod(x,1/f))-1
+2*(mod(f*x,1))-1
 ```
 
 ### Triangle wave
 ```
-4*f*mod(abs(x-0.5),1/f)-1
+4*abs(mod(f*x,1))-0.5)-1
 ```
 
 ### Square Wave

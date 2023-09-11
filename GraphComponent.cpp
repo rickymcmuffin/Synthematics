@@ -14,7 +14,7 @@ GraphComponent::GraphComponent()
     // GraphComponent::expression = expression;
 
     xMin = 0;
-    xMax = 1;
+    xMax = 30;
     yMin = -1;
     yMax = 1;
 }

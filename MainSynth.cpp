@@ -229,3 +229,4 @@ void MainSynth::setFrequency(double freq)
     MainSynth::frequency = freq;
     xCurrent = 0;
 }
+

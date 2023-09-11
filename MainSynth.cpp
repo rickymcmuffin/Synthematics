@@ -1,5 +1,6 @@
 #include "MainSynth.h"
 #include "MainEditor.h"
+#include "WaveSound.h"
 #include "Parser/unparseMath.h"
 
 #define PLUGIN_NAME "Synthematics"
@@ -88,13 +89,14 @@ void MainSynth::changeProgramName(int index, const juce::String &newName)
 }
 
 //==============================================================================
-void MainSynth::prepareToPlay(double sampleRate, int samplesPerBlock)
+void MainSynth::prepareToPlay(double sampleRate, int /*samplesPerBlock*/)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    juce::ignoreUnused(sampleRate, samplesPerBlock);
     MainSynth::xDelta = 1 / sampleRate;
     std::cout << xDelta << std::endl;
+    initializeSynth();
+    synth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 void MainSynth::releaseResources()
@@ -144,44 +146,15 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    // float **channelDatas = (float **)calloc(totalNumOutputChannels, sizeof(float *));
-    // for (int channel = 0; channel < totalNumOutputChannels; ++channel)
-    // {
-    //     channelDatas[channel] = buffer.getWritePointer(channel);
-    // }
-    for (auto sample = 0; sample < buffer.getNumSamples(); sample++)
-    {
-        double res = 0;
-        try
-        {
-            xCurrent += xDelta;
-            res = resultExpression(expression, xCurrent, frequency);
-            if (res < -1)
-            {
-                res = -1;
-            }
-            else if (1 < res)
-            {
-                res = 1;
-            }
-        }
-        catch (EquationException e)
-        {
-            res = 0;
-        }
-        for (int channel = 0; channel < totalNumOutputChannels; ++channel)
-        {
-            auto *channelData = buffer.getWritePointer(channel);
-            channelData[sample] = (float)res;
-        }
-    }
-    // free(channelDatas);
+    int numSamples = buffer.getNumSamples();
+
+    // Now pass any incoming midi messages to our keyboard state object, and let it
+    // add messages to the buffer if the user is clicking on the on-screen keys
+    keyboardState.processNextMidiBuffer(midiMessages, 0, numSamples, true);
+
+    // and now get our synth to process these midi events and generate its output.
+    synth.renderNextBlock(buffer, midiMessages, 0, numSamples);
+
 }
 
 //==============================================================================
@@ -222,6 +195,7 @@ void MainSynth::setExpression(AST *expr)
 {
     MainSynth::expression = expr;
     xCurrent = 0;
+    initializeSynth();
 }
 
 void MainSynth::setFrequency(double freq)
@@ -230,3 +204,16 @@ void MainSynth::setFrequency(double freq)
     xCurrent = 0;
 }
 
+void MainSynth::initializeSynth()
+{
+    synth.clearSounds();
+    synth.clearVoices();
+    auto numVoices = 8;
+
+    // Add some voices...
+    for (auto i = 0; i < numVoices; ++i)
+        synth.addVoice(new WaveVoice(expression));
+
+    // ..and give the synth a sound to play
+    synth.addSound(new WaveSound());
+}

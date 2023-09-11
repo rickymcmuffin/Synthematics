@@ -4,7 +4,7 @@
 #include "Parser/ast.h"
 
 //==============================================================================
-class MainSynth  : public juce::AudioProcessor
+class MainSynth : public juce::AudioProcessor
 {
 public:
     //==============================================================================
@@ -12,16 +12,16 @@ public:
     ~MainSynth() override;
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+    bool isBusesLayoutSupported(const BusesLayout &layouts) const override;
 
-    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void processBlock(juce::AudioBuffer<float> &, juce::MidiBuffer &) override;
     using AudioProcessor::processBlock;
 
     //==============================================================================
-    juce::AudioProcessorEditor* createEditor() override;
+    juce::AudioProcessorEditor *createEditor() override;
     bool hasEditor() const override;
 
     //==============================================================================
@@ -35,60 +35,28 @@ public:
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const juce::String getProgramName (int index) override;
-    void changeProgramName (int index, const juce::String& newName) override;
+    void setCurrentProgram(int index) override;
+    const juce::String getProgramName(int index) override;
+    void changeProgramName(int index, const juce::String &newName) override;
 
     //==============================================================================
-    void getStateInformation (juce::MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+    void getStateInformation(juce::MemoryBlock &destData) override;
+    void setStateInformation(const void *data, int sizeInBytes) override;
 
     void setExpression(AST *expr);
     void setFrequency(double freq);
-    
 
 private:
     AST *expression;
-	double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
+    double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
     double frequency = 440;
     juce::Random random;
+    juce::Synthesiser synth;
+    juce::MidiKeyboardState keyboardState;
+
+    void initializeSynth();
+
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainSynth)
-};
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainSynth)
 
-class WaveSound : public juce::SynthesiserSound
-{
-public:
-    WaveSound() {}
-
-    bool appliesToNote (int /*midiNoteNumber*/) override    { return true; }
-    bool appliesToChannel (int /*midiChannel*/) override    { return true; }
-};
-
-class WaveVoice   : public juce::SynthesiserVoice
-{
-public:
-    WaveVoice() {}
-
-    bool canPlaySound (juce::SynthesiserSound* sound) override;
-
-    void startNote (int midiNoteNumber, float velocity,
-                    juce::SynthesiserSound* /*sound*/,
-                    int /*currentPitchWheelPosition*/) override;
-
-    void stopNote (float /*velocity*/, bool allowTailOff) override;
-
-    void pitchWheelMoved (int /*newValue*/) override;
-
-    void controllerMoved (int /*controllerNumber*/, int /*newValue*/) override;
-
-    void renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override;
-
-    using SynthesiserVoice::renderNextBlock;
-
-private:
-    double currentAngle = 0.0;
-    double angleDelta   = 0.0;
-    double level        = 0.0;
-    double tailOff      = 0.0;
 };

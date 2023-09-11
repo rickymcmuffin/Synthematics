@@ -161,7 +161,7 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
         try
         {
             xCurrent += xDelta;
-            res = resultExpression(expression, xCurrent);
+            res = resultExpression(expression, xCurrent, frequency);
             if (res < -1)
             {
                 res = -1;
@@ -221,5 +221,11 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 void MainSynth::setExpression(AST *expr)
 {
     MainSynth::expression = expr;
+    xCurrent = 0;
+}
+
+void MainSynth::setFrequency(double freq)
+{
+    MainSynth::frequency = freq;
     xCurrent = 0;
 }

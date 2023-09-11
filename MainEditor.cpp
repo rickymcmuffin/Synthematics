@@ -10,7 +10,7 @@ MainEditor::MainEditor(MainSynth &p)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     // MainComponent::graph = GraphComponent(expression);
-    juce::String expr = "sin(440 * 2 * 3.14 * x)";
+    juce::String expr = "sin(f * 2 * 3.14 * x)";
 
     addAndMakeVisible(graph);
 
@@ -22,6 +22,15 @@ MainEditor::MainEditor(MainSynth &p)
         setExpressionText(expressionInput.getText());
     };
     expressionInput.setText(expr, juce::dontSendNotification);
+
+    addAndMakeVisible(freqInput);
+    freqInput.setEditable(true);
+    freqInput.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
+    freqInput.onTextChange = [this]
+    {
+        processorRef.setFrequency(freqInput.getText().getDoubleValue());
+    };
+    freqInput.setText("440", juce::dontSendNotification);
 
     addAndMakeVisible(yEqualsLabel);
     yEqualsLabel.attachToComponent(&expressionInput, true);
@@ -56,13 +65,13 @@ void MainEditor::resized()
 {
     errorLabel.setBounds(50, 450, getWidth() - 110, 20);
     expressionInput.setBounds(50, 500, getWidth() - 110, 20);
+    freqInput.setBounds(50, 550, getWidth() - 110, 20);
 }
 
 void MainEditor::setExpressionText(juce::String expr)
 {
         
     errorLabel.setText("", juce::dontSendNotification);
-    std::cout << "setting expr text" << std::endl;
     std::string s = expr.toStdString();
     Parser p = Parser(s);
 

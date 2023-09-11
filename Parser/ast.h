@@ -87,10 +87,10 @@ typedef struct
 
 typedef enum {
     sin_f,
-    cos_f,
     sign_f,
     pow_f,
-    mod_f
+    mod_f,
+    abs_f
     
 } func_name;
 

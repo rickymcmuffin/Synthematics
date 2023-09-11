@@ -44,11 +44,13 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     void setExpression(AST *expr);
+    void setFrequency(double freq);
     
 
 private:
     AST *expression;
 	double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
+    double frequency = 440;
     juce::Random random;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainSynth)

@@ -59,7 +59,6 @@ void Parser::eat(token_type tt)
 
 AST *Parser::parseExpression()
 {
-	cout << "parsing expr"<<endl;
 
 	token fst = currentTok;
 	AST *trm = parseTerm();
@@ -200,15 +199,17 @@ AST *Parser::parseFunction(token idt, AST *iden)
 {
 	func_name func;
 	string funcString = idt.text;
-	cout << "parseFunc" << endl;
 	if (funcString.compare("sin") == 0)
 	{
-		cout << "parseSin" << endl;
 		func = sin_f;
 	} else if(funcString.compare("pow") == 0){
 		func = pow_f;
 	} else if(funcString.compare("mod") == 0){
 		func = mod_f;
+	} else if(funcString.compare("sign") == 0){
+		func = sign_f;
+	} else if(funcString.compare("abs") == 0){
+		func = abs_f;
 	} 
 	else
 	{
@@ -231,16 +232,13 @@ AST_list Parser::parseParameters()
 	}
 
 
-	cout << "before"<<endl;
 	eat(rparensym);
-	cout << "after"<<endl;
 
 	return params;
 }
 
 AST_list Parser::parseCommaParameters()
 {
-	cout << "parsing comma param"<<endl;
 	AST_list ret = ast_list_empty_list();
 	AST_list last = ast_list_empty_list();
 	while (currentTok.typ == commasym)

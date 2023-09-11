@@ -19,6 +19,10 @@ double resultPow(AST *powFunc);
 
 double resultMod(AST *modFunc);
 
+double resultSign(AST *signFunc);
+
+double resultAbs(AST *absFunc);
+
 double resultIdent(AST *ident);
 
 double resultNum(AST *num);

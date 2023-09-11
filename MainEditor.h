@@ -22,6 +22,7 @@ private:
     GraphComponent graph;
 
     juce::Label expressionInput;
+    juce::Label freqInput;
     juce::Label yEqualsLabel;
     juce::Label errorLabel;
 

@@ -95,6 +95,12 @@ double resultFuncCall(AST *funcCall)
 	case mod_f:
 		return resultMod(funcCall);
 		break;
+	case sign_f:
+		return resultSign(funcCall);
+		break;
+	case abs_f:
+		return resultAbs(funcCall);
+		break;
 	default:
 		throw EquationException("Unrecognized function", funcCall->index);
 	}
@@ -120,7 +126,7 @@ double resultPow(AST *powFunc)
 double resultSin(AST *sinFunc)
 {
 	AST *param = ast_list_first(sinFunc->data.func_call.parameters);
-	double exprResult = resultExpr(sinFunc->data.func_call.parameters);
+	double exprResult = resultExpr(param);
 
 	return sin(exprResult);
 }
@@ -140,6 +146,24 @@ double resultMod(AST *modFunc){
 	double modResult = fmod(one, two);
 
 	return modResult;
+}
+
+double resultSign(AST *signFunc){
+	AST *param = ast_list_first(signFunc->data.func_call.parameters);
+	double exprResult = resultExpr(param);
+
+	if(exprResult < 0){
+		return -1;
+	} else {
+		return 1;
+	}
+}
+
+double resultAbs(AST *absFunc){
+	AST *param = ast_list_first(absFunc->data.func_call.parameters);
+	double exprResult = resultExpr(param);
+
+	return fabs(exprResult);
 }
 
 double resultIdent(AST *ident)

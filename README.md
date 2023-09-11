@@ -57,6 +57,9 @@ Returns x mod interval
 mod(x, interval)
 ```
 
-
+Returns absolute value of x
+```
+abs(x)
+```
 
 

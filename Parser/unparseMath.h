@@ -15,6 +15,8 @@ double resultFuncCall(AST *funcCall);
 
 double resultSin(AST *sinFunc);
 
+double resultPow(AST *powFunc);
+
 double resultIdent(AST *ident);
 
 double resultNum(AST *num);

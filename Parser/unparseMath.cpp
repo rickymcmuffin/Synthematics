@@ -89,12 +89,33 @@ double resultFuncCall(AST *funcCall)
 	case sin_f:
 		return resultSin(funcCall);
 		break;
+	case pow_f:
+		return resultPow(funcCall);
+		break;
 	default:
 		throw EquationException("Unrecognized function", funcCall->index);
 	}
 	return 0;
 }
 
+double resultPow(AST *powFunc)
+{
+	cout << "resultPow size: " << ast_list_size(powFunc->data.func_call.parameters)<<endl;
+
+	AST *paramOne = ast_list_first(powFunc->data.func_call.parameters);
+	double base = resultExpr(paramOne);
+	cout << "base: "<<base<<endl;
+	
+	powFunc = ast_list_rest(powFunc);
+
+	AST *paramTwo = ast_list_first(powFunc->data.func_call.parameters);
+	double power = resultExpr(paramTwo);
+	cout << "pow: "<<power<<endl;
+	
+	double powResult = pow(base, power);
+
+	return powResult;
+}
 double resultSin(AST *sinFunc)
 {
 	AST *param = ast_list_first(sinFunc->data.func_call.parameters);

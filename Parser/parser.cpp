@@ -203,9 +203,10 @@ AST *Parser::parseFunction(token idt, AST *iden)
 	cout << "parseFunc" << endl;
 	if (funcString.compare("sin") == 0)
 	{
-
 		cout << "parseSin" << endl;
 		func = sin_f;
+	} else if(funcString.compare("pow") == 0){
+		func = pow_f;
 	}
 	else
 	{

@@ -7,14 +7,14 @@ using namespace std;
 
 int main()
 {
-	Parser p = Parser("sin(x)");
+	Parser p = Parser("pow(x, 2)");
 
 	try
 	{
 		AST *expr = p.parseExpression();
 		cout << unparseExpression(expr) << endl;
 
-		cout << resultExpression(expr, 3.14/2) << endl;
+		cout << "result: " << resultExpression(expr, 3) << endl;
 	}
 	catch (EquationException e)
 	{

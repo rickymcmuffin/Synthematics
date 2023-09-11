@@ -92,6 +92,9 @@ double resultFuncCall(AST *funcCall)
 	case pow_f:
 		return resultPow(funcCall);
 		break;
+	case mod_f:
+		return resultMod(funcCall);
+		break;
 	default:
 		throw EquationException("Unrecognized function", funcCall->index);
 	}
@@ -100,17 +103,15 @@ double resultFuncCall(AST *funcCall)
 
 double resultPow(AST *powFunc)
 {
-	cout << "resultPow size: " << ast_list_size(powFunc->data.func_call.parameters)<<endl;
+	AST_list params = powFunc->data.func_call.parameters;
 
-	AST *paramOne = ast_list_first(powFunc->data.func_call.parameters);
+	AST *paramOne = ast_list_first(params);
 	double base = resultExpr(paramOne);
-	cout << "base: "<<base<<endl;
 	
-	powFunc = ast_list_rest(powFunc);
+	params = ast_list_rest(params);
 
-	AST *paramTwo = ast_list_first(powFunc->data.func_call.parameters);
+	AST *paramTwo = ast_list_first(params);
 	double power = resultExpr(paramTwo);
-	cout << "pow: "<<power<<endl;
 	
 	double powResult = pow(base, power);
 
@@ -122,6 +123,23 @@ double resultSin(AST *sinFunc)
 	double exprResult = resultExpr(sinFunc->data.func_call.parameters);
 
 	return sin(exprResult);
+}
+
+double resultMod(AST *modFunc){
+
+	AST_list params = modFunc->data.func_call.parameters;
+
+	AST *paramOne = ast_list_first(params);
+	double one = resultExpr(paramOne);
+	
+	params = ast_list_rest(params);
+
+	AST *paramTwo = ast_list_first(params);
+	double two = resultExpr(paramTwo);
+	
+	double modResult = fmod(one, two);
+
+	return modResult;
 }
 
 double resultIdent(AST *ident)

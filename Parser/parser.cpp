@@ -207,7 +207,9 @@ AST *Parser::parseFunction(token idt, AST *iden)
 		func = sin_f;
 	} else if(funcString.compare("pow") == 0){
 		func = pow_f;
-	}
+	} else if(funcString.compare("mod") == 0){
+		func = mod_f;
+	} 
 	else
 	{
 		throw EquationException("unknown function name", idt.index);

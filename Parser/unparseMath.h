@@ -17,6 +17,8 @@ double resultSin(AST *sinFunc);
 
 double resultPow(AST *powFunc);
 
+double resultMod(AST *modFunc);
+
 double resultIdent(AST *ident);
 
 double resultNum(AST *num);

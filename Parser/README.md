@@ -1,2 +1,2 @@
-# GraphingCalculator
-Graphing calculator in C++
+# Parser
+Does parsing for Synthematics

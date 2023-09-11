@@ -25,7 +25,7 @@ sin(f*2*3.14*x)
 
 ### Triangle wave
 ```
-4*abs(mod(f*x,1))-0.5)-1
+4*abs(mod(f*x,1)-0.5)-1)
 ```
 
 ### Square Wave

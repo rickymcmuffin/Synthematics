@@ -1,6 +1,7 @@
 #include "unparseMath.h"
 #include "equationException.h"
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -8,20 +9,27 @@ double xValue;
 
 double fValue;
 
+std::vector<AST *> yAuxes;
+
 double resultExpression(AST *expression, double xVal)
 {
-	return resultExpression(expression, xVal, 1);
+	return resultExpression(expression, xVal, 1, NULL);
 }
 
 double resultExpression(AST *expression)
 {
-	return resultExpression(expression, 1, 1);
+	return resultExpression(expression, 1, 1, NULL);
 }
 double resultExpression(AST *expression, double xVal, double fVal)
 {
 
+	return resultExpression(expression, xVal, fVal, NULL);
+}
+
+double resultExpression(AST *expression, double xVal, double fVal, std::vector<AST *> yAux){
 	xValue = xVal;
 	fValue = fVal;
+	yAuxes = yAux;
 
 	return resultExpr(expression);
 }
@@ -240,10 +248,13 @@ double resultIdent(AST *ident)
 	{
 		return fValue;
 	}
-	else
+	else if(ident->data.ident.yAux > 0)
 	{
-		throw EquationException("Unknown variable: " + str, ident->index);
+		if(yAuxes.size() > ident->data.ident.yAux){
+			return resultExpr(yAuxes[ident->data.ident.yAux]);
+		}
 	}
+	return 1;
 }
 
 double resultNum(AST *num)

@@ -1,6 +1,7 @@
 /* $Id: ast.c,v 1.9 2023/03/23 05:36:03 leavens Exp $ */
 #include <stdlib.h>
-#include <cstring>
+// #include <cstring>
+#include <string>
 #include "equationException.h"
 #include "ast.h"
 
@@ -105,6 +106,14 @@ AST *ast_ident(token t, std::string str)
     char *arr = new char[str.length() + 1];
     strcpy_s(arr, sizeof(arr), str.c_str());
     ret->data.ident.name = arr;
+
+    ret->data.ident.yAux = 0;
+    if(str.at(0) == 'y'){
+        try{
+            ret->data.ident.yAux = std::stoi(str.substr(1,str.length()));
+        } catch(std::invalid_argument e){
+        }
+    }
     return ret;
 }
 

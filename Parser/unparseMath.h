@@ -3,9 +3,10 @@
 #include "ast.h"
 
 
-double resultExpression(AST *expression, double xValue);
+double resultExpression(AST *expression, double xVal);
 double resultExpression(AST *expression);
-double resultExpression(AST *expression, double xValue, double fValue);
+double resultExpression(AST *expression, double xVal, double fVal);
+double resultExpression(AST *expression, double xVal, double fValue, AST **yAux);
 
 double resultExpr(AST *expr);
 

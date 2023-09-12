@@ -142,11 +142,11 @@ token Lexer::next()
 		{
 			ret.text += expression[currentIndex + 1];
 			currentIndex++;
-			ret.typ = lessym;
+			ret.typ = leqsym;
 		}
 		else
 		{
-			ret.typ = leqsym;
+			ret.typ = lessym;
 		}
 		break;
 	case '>':

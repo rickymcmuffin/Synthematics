@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-	Parser p = Parser("pow(x, 2)");
+	Parser p = Parser("{x <= 0: 2, x > 0: 4}");
 
 	try
 	{

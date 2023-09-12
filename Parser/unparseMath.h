@@ -9,6 +9,10 @@ double resultExpression(AST *expression, double xValue, double fValue);
 
 double resultExpr(AST *expr);
 
+double resultPeacewise(AST *expr);
+
+bool resultCond(AST *cond);
+
 double resultBinExpr(AST *binExpr);
 
 double resultFuncCall(AST *funcCall);

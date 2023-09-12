@@ -8,6 +8,12 @@ std::string unparseExpression(AST *ast);
 
 void unparseExpr(AST *ast, std::string *s);
 
+void unparsePeacewise(AST *ast, std::string *s);
+
+void unparseCondExpr(AST *ast, std::string *s);
+
+void unparseBinCond(AST *ast, std::string *s);
+
 void unparseBinExpr(AST *ast, std::string *s);
 
 void unparseArithOp(bin_arith_op op, std::string *s);

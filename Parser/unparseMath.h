@@ -1,12 +1,12 @@
 #ifndef _UNPARSEMATH_H
 #define _UNPARSEMATH_H
 #include "ast.h"
-
+#include <vector>
 
 double resultExpression(AST *expression, double xVal);
 double resultExpression(AST *expression);
 double resultExpression(AST *expression, double xVal, double fVal);
-double resultExpression(AST *expression, double xVal, double fValue, AST **yAux);
+double resultExpression(AST *expression, double xVal, double fValue, std::vector<AST *> yAux);
 
 double resultExpr(AST *expr);
 

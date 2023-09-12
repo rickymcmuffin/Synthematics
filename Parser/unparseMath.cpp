@@ -1,7 +1,6 @@
 #include "unparseMath.h"
 #include "equationException.h"
 #include <cmath>
-#include <vector>
 
 using namespace std;
 
@@ -13,17 +12,19 @@ std::vector<AST *> yAuxes;
 
 double resultExpression(AST *expression, double xVal)
 {
-	return resultExpression(expression, xVal, 1, NULL);
+	yAuxes.clear();
+	return resultExpression(expression, xVal, 1, yAuxes);
 }
 
 double resultExpression(AST *expression)
 {
-	return resultExpression(expression, 1, 1, NULL);
+	yAuxes.clear();
+	return resultExpression(expression, 1, 1, yAuxes);
 }
 double resultExpression(AST *expression, double xVal, double fVal)
 {
-
-	return resultExpression(expression, xVal, fVal, NULL);
+	yAuxes.clear();
+	return resultExpression(expression, xVal, fVal, yAuxes);
 }
 
 double resultExpression(AST *expression, double xVal, double fVal, std::vector<AST *> yAux){
@@ -250,8 +251,8 @@ double resultIdent(AST *ident)
 	}
 	else if(ident->data.ident.yAux > 0)
 	{
-		if(yAuxes.size() > ident->data.ident.yAux){
-			return resultExpr(yAuxes[ident->data.ident.yAux]);
+		if(yAuxes.size() >= ident->data.ident.yAux){
+			return resultExpr(yAuxes[ident->data.ident.yAux-1]);
 		}
 	}
 	return 1;

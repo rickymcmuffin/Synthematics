@@ -28,6 +28,12 @@ private:
 
 	void eat(token_type tt);
 
+	AST *parsePeacewise();
+
+	AST *parseCondExpr();
+
+	AST *parseCommaCondExpr();
+
 	// <bin-rel-cond> ::= <expr> <rel-op> <expr>
 	AST *parseBinRelCond();
 

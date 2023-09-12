@@ -35,6 +35,9 @@ double resultExpr(AST *expr)
 	double res = 0;
 	switch (expr->type_tag)
 	{
+	case peacewise_ast:
+		res = resultPeacewise(expr);
+		break;
 	case bin_expr_ast:
 		res = resultBinExpr(expr);
 		break;
@@ -53,6 +56,50 @@ double resultExpr(AST *expr)
 	}
 
 	return res;
+}
+
+double resultPeacewise(AST *expr)
+{
+	cout << "resultPeacewsie"<<endl;
+	AST_list condExprs = expr->data.peacewise.cond_exprs;
+
+	while(!ast_list_is_empty(condExprs)){
+		AST *curCond = ast_list_first(condExprs)->data.cond_expr.cond;
+		if(resultCond(curCond)){
+			return resultExpr(ast_list_first(condExprs)->data.cond_expr.expr);
+		}
+		condExprs = ast_list_rest(condExprs);
+	}
+	return 0;
+}
+
+bool resultCond(AST *cond)
+{
+	double leftResult = resultExpr(cond->data.bin_cond.leftexp);
+	double rightResult = resultExpr(cond->data.bin_cond.rightexp);
+
+	switch (cond->data.bin_cond.relop)
+	{
+	case eqop:
+		return leftResult == rightResult;
+		break;
+	case neqop:
+		return leftResult != rightResult;
+		break;
+	case ltop:
+		return leftResult < rightResult;
+		break;
+	case leqop:
+		return leftResult <= rightResult;
+		break;
+	case gtop:
+		return leftResult > rightResult;
+		break;
+	case geqop:
+		return leftResult >= rightResult;
+		break;
+	}
+	return NULL;
 }
 
 double resultBinExpr(AST *binExpr)
@@ -116,12 +163,12 @@ double resultPow(AST *powFunc)
 
 	AST *paramOne = ast_list_first(params);
 	double base = resultExpr(paramOne);
-	
+
 	params = ast_list_rest(params);
 
 	AST *paramTwo = ast_list_first(params);
 	double power = resultExpr(paramTwo);
-	
+
 	double powResult = pow(base, power);
 
 	return powResult;
@@ -141,35 +188,41 @@ double resultCos(AST *cosFunc)
 	return cos(exprResult);
 }
 
-double resultMod(AST *modFunc){
+double resultMod(AST *modFunc)
+{
 
 	AST_list params = modFunc->data.func_call.parameters;
 
 	AST *paramOne = ast_list_first(params);
 	double one = resultExpr(paramOne);
-	
+
 	params = ast_list_rest(params);
 
 	AST *paramTwo = ast_list_first(params);
 	double two = resultExpr(paramTwo);
-	
+
 	double modResult = fmod(one, two);
 
 	return modResult;
 }
 
-double resultSign(AST *signFunc){
+double resultSign(AST *signFunc)
+{
 	AST *param = ast_list_first(signFunc->data.func_call.parameters);
 	double exprResult = resultExpr(param);
 
-	if(exprResult < 0){
+	if (exprResult < 0)
+	{
 		return -1;
-	} else {
+	}
+	else
+	{
 		return 1;
 	}
 }
 
-double resultAbs(AST *absFunc){
+double resultAbs(AST *absFunc)
+{
 	AST *param = ast_list_first(absFunc->data.func_call.parameters);
 	double exprResult = resultExpr(param);
 

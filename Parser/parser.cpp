@@ -61,6 +61,9 @@ AST *Parser::parseExpression()
 {
 
 	token fst = currentTok;
+	if(fst.typ == lcurlysym){
+		return parsePeacewise();
+	}
 	AST *trm = parseTerm();
 	AST *exp = trm;
 	while (currentTok.typ == plussym || currentTok.typ == minussym)
@@ -70,6 +73,82 @@ AST *Parser::parseExpression()
 					    rght->data.op_expr.exp);
 	}
 	return exp;
+}
+
+AST *Parser::parsePeacewise(){
+	token fir = currentTok;
+	eat(lcurlysym);
+
+	AST_list condExprs = ast_list_singleton(parseCondExpr());
+	AST_list last = condExprs;
+	while(currentTok.typ == commasym){
+		eat(commasym);
+		AST_list newCondExpr = ast_list_singleton(parseCondExpr());
+		add_AST_to_end(&condExprs, &last, newCondExpr);
+	}
+
+	eat(rcurlysym);
+	return ast_peacewise(fir, condExprs);
+}
+
+AST *Parser::parseCondExpr(){
+	token fir = currentTok;
+	AST *cond = parseBinRelCond();
+
+	eat(colonsym);
+
+	AST *expr = parseExpression();
+
+	return ast_cond_expr(fir, cond, expr);
+}
+
+
+// <bin-rel-cond> ::= <expr> <rel-op> <expr>
+AST *Parser::parseBinRelCond()
+{
+	token fir = currentTok;
+	AST *leftexp = parseExpression();
+	rel_op relop = parseRelOp();
+	AST *rightexp = parseExpression();
+	return ast_bin_cond(fir, leftexp, relop, rightexp);
+}
+
+// <rel-op> ::= = | != | < | <= | > | >=
+rel_op Parser::parseRelOp()
+{
+	cout<< "relop: "<<ttyp2str(currentTok.typ)<<endl;;
+	rel_op ret;
+	switch (currentTok.typ)
+	{
+	case eqsym:
+		eat(eqsym);
+		ret = eqop;
+		break;
+	case neqsym:
+		eat(neqsym);
+		ret = neqop;
+		break;
+	case lessym:
+		eat(lessym);
+		ret = ltop;
+		break;
+	case leqsym:
+		eat(leqsym);
+		ret = leqop;
+		break;
+	case gtrsym:
+		eat(gtrsym);
+		ret = gtop;
+		break;
+	case geqsym:
+		eat(geqsym);
+		ret = geqop;
+		break;
+	default:
+		throw EquationException("Unexpected token", currentTok.index);
+	}
+
+	return ret;
 }
 
 AST *Parser::parseAddSubTerm()
@@ -206,13 +285,19 @@ AST *Parser::parseFunction(token idt, AST *iden)
 		func = cos_f;
 	} else if(funcString.compare("pow") == 0){
 		func = pow_f;
-	} else if(funcString.compare("mod") == 0){
+	}
+	else if (funcString.compare("mod") == 0)
+	{
 		func = mod_f;
-	} else if(funcString.compare("sign") == 0){
+	}
+	else if (funcString.compare("sign") == 0)
+	{
 		func = sign_f;
-	} else if(funcString.compare("abs") == 0){
+	}
+	else if (funcString.compare("abs") == 0)
+	{
 		func = abs_f;
-	} 
+	}
 	else
 	{
 		throw EquationException("unknown function name", idt.index);
@@ -232,7 +317,6 @@ AST_list Parser::parseParameters()
 		AST_list rest = parseCommaParameters();
 		ast_list_splice(params, rest);
 	}
-
 
 	eat(rparensym);
 

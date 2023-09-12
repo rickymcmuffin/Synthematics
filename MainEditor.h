@@ -2,6 +2,7 @@
 
 #include "MainSynth.h"
 #include "GraphComponent.h"
+#include <juce_audio_utils/juce_audio_utils.h>
 
 //==============================================================================
 class MainEditor  : public juce::AudioProcessorEditor
@@ -22,9 +23,9 @@ private:
     GraphComponent graph;
 
     juce::Label expressionInput;
-    juce::Label freqInput;
     juce::Label yEqualsLabel;
     juce::Label errorLabel;
+    juce::MidiKeyboardComponent midiKeyboard;
 
     AST *expression;
 

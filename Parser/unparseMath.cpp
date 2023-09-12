@@ -89,6 +89,9 @@ double resultFuncCall(AST *funcCall)
 	case sin_f:
 		return resultSin(funcCall);
 		break;
+	case cos_f:
+		return resultCos(funcCall);
+		break;
 	case pow_f:
 		return resultPow(funcCall);
 		break;
@@ -129,6 +132,13 @@ double resultSin(AST *sinFunc)
 	double exprResult = resultExpr(param);
 
 	return sin(exprResult);
+}
+double resultCos(AST *cosFunc)
+{
+	AST *param = ast_list_first(cosFunc->data.func_call.parameters);
+	double exprResult = resultExpr(param);
+
+	return cos(exprResult);
 }
 
 double resultMod(AST *modFunc){

@@ -202,6 +202,8 @@ AST *Parser::parseFunction(token idt, AST *iden)
 	if (funcString.compare("sin") == 0)
 	{
 		func = sin_f;
+	} else if(funcString.compare("cos") == 0){
+		func = cos_f;
 	} else if(funcString.compare("pow") == 0){
 		func = pow_f;
 	} else if(funcString.compare("mod") == 0){

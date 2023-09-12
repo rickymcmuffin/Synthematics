@@ -8,6 +8,8 @@
 // types of ASTs (type tags)
 typedef enum
 {
+    peacewise_ast,
+    cond_expr_ast,
     odd_cond_ast,
     bin_cond_ast,
     op_expr_ast,
@@ -43,6 +45,15 @@ typedef enum
     gtop,
     geqop
 } rel_op;
+
+typedef struct{
+    AST_list cond_exprs;
+} peacewise_t;
+
+typedef struct {
+    AST *cond;
+    AST *expr;
+} cond_expr_t;
 
 // C ::= odd E
 typedef struct
@@ -125,6 +136,8 @@ typedef struct AST_s
     AST_type type_tag;
     union AST_u
     {
+        peacewise_t peacewise;
+        cond_expr_t cond_expr;
         odd_cond_t odd_cond;
         bin_cond_t bin_cond;
         op_expr_t op_expr;
@@ -134,6 +147,10 @@ typedef struct AST_s
         number_t number;
     } data;
 } AST;
+
+extern AST *ast_peacewise(token t, AST_list cond_exprs);
+
+extern AST *ast_cond_expr(token t, AST *cond, AST *expr);
 
 // Return a (pointer to a) fresh AST for an odd condition
 // with expression AST exp

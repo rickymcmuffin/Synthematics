@@ -23,6 +23,21 @@ static AST *ast_allocate(unsigned int ind)
     return ret;
 }
 
+extern AST *ast_peacewise(token t, AST_list cond_exprs){
+    AST *ret = ast_allocate(t.index);
+    ret->type_tag = peacewise_ast;
+    ret->data.peacewise.cond_exprs = cond_exprs;
+    return ret;
+}
+
+extern AST *ast_cond_expr(token t, AST *cond, AST *expr){
+    AST *ret = ast_allocate(t.index);
+    ret->type_tag = cond_expr_ast;
+    ret->data.cond_expr.cond = cond;
+    ret->data.cond_expr.expr = expr;
+    return ret;
+}
+
 // Return a (pointer to a) fresh AST for an odd condition
 // with expression AST exp
 AST *ast_odd_cond(token t, AST *exp)

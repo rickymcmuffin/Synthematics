@@ -45,6 +45,7 @@ public:
 
     void setExpression(AST *expr);
     void setFrequency(double freq);
+    juce::MidiKeyboardState keyboardState;
 
 private:
     AST *expression;
@@ -52,7 +53,6 @@ private:
     double frequency = 440;
     juce::Random random;
     juce::Synthesiser synth;
-    juce::MidiKeyboardState keyboardState;
 
     void initializeSynth();
 

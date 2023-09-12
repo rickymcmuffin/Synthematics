@@ -18,6 +18,7 @@ double resultBinExpr(AST *binExpr);
 double resultFuncCall(AST *funcCall);
 
 double resultSin(AST *sinFunc);
+double resultCos(AST *cosFunc);
 
 double resultPow(AST *powFunc);
 

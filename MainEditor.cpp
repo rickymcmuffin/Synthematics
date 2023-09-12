@@ -3,7 +3,8 @@
 
 //==============================================================================
 MainEditor::MainEditor(MainSynth &p)
-    : AudioProcessorEditor(&p), processorRef(p)
+    : AudioProcessorEditor(&p), processorRef(p),
+      midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 {
 
     // MainEditor::processorRef = p;
@@ -23,14 +24,6 @@ MainEditor::MainEditor(MainSynth &p)
     };
     expressionInput.setText(expr, juce::dontSendNotification);
 
-    addAndMakeVisible(freqInput);
-    freqInput.setEditable(true);
-    freqInput.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
-    freqInput.onTextChange = [this]
-    {
-        processorRef.setFrequency(freqInput.getText().getDoubleValue());
-    };
-    freqInput.setText("440", juce::dontSendNotification);
 
     addAndMakeVisible(yEqualsLabel);
     yEqualsLabel.attachToComponent(&expressionInput, true);
@@ -38,6 +31,8 @@ MainEditor::MainEditor(MainSynth &p)
 
     addAndMakeVisible(errorLabel);
     errorLabel.setColour(juce::Label::textColourId, juce::Colours::red);
+
+    addAndMakeVisible(midiKeyboard);
 
     expressionInput.setJustificationType(juce::Justification::bottom);
 
@@ -63,14 +58,15 @@ void MainEditor::paint(juce::Graphics &g)
 
 void MainEditor::resized()
 {
-    errorLabel.setBounds(50, 450, getWidth() - 110, 20);
-    expressionInput.setBounds(50, 500, getWidth() - 110, 20);
-    freqInput.setBounds(50, 550, getWidth() - 110, 20);
+    auto r = getLocalBounds().reduced (8);
+    errorLabel.setBounds(50, 350, getWidth() - 110, 20);
+    expressionInput.setBounds(50, 400, getWidth() - 110, 20);
+    midiKeyboard.setBounds(r.removeFromBottom(70));
 }
 
 void MainEditor::setExpressionText(juce::String expr)
 {
-        
+
     errorLabel.setText("", juce::dontSendNotification);
     std::string s = expr.toStdString();
     Parser p = Parser(s);
@@ -82,7 +78,8 @@ void MainEditor::setExpressionText(juce::String expr)
         MainEditor::graph.setExpression(MainEditor::expression);
         MainEditor::processorRef.setExpression(MainEditor::expression);
     }
-    catch(EquationException e){
+    catch (EquationException e)
+    {
         errorLabel.setText(e.what(), juce::dontSendNotification);
     }
 }

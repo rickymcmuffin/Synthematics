@@ -39,9 +39,9 @@ double resultExpr(AST *expr)
 {
 	if (expr == NULL)
 	{
-		return 0;
+		return 1;
 	}
-	double res = 0;
+	double res = 1;
 	switch (expr->type_tag)
 	{
 	case peacewise_ast:
@@ -60,7 +60,6 @@ double resultExpr(AST *expr)
 		res = resultNum(expr);
 		break;
 	default:
-		res = 0;
 		break;
 	}
 
@@ -79,7 +78,7 @@ double resultPeacewise(AST *expr)
 		}
 		condExprs = ast_list_rest(condExprs);
 	}
-	return 0;
+	return 1;
 }
 
 bool resultCond(AST *cond)
@@ -249,10 +248,11 @@ double resultIdent(AST *ident)
 	{
 		return fValue;
 	}
-	else if(ident->data.ident.yAux > 0)
+	else if(ident->data.ident.yAux > -1)
 	{
-		if(yAuxes.size() >= ident->data.ident.yAux){
-			return resultExpr(yAuxes[ident->data.ident.yAux-1]);
+		if(yAuxes.size() > ident->data.ident.yAux){
+
+			return resultExpr(yAuxes[ident->data.ident.yAux]);
 		}
 	}
 	return 1;

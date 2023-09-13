@@ -26,6 +26,7 @@ public:
     void resized() override;
 
     void setExpression(AST *ast);
+    void setYAuxes(std::vector<AST *> yA);
 
     
 
@@ -39,6 +40,8 @@ private:
     float getYPixel(double yVal);
 
     AST *expression;
+    std::vector<AST *> yAuxes;
+
     float xMin;
     float xMax;
     float yMin;

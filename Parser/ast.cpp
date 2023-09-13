@@ -107,7 +107,7 @@ AST *ast_ident(token t, std::string str)
     strcpy_s(arr, sizeof(arr), str.c_str());
     ret->data.ident.name = arr;
 
-    ret->data.ident.yAux = 0;
+    ret->data.ident.yAux = -1;
     if(str.at(0) == 'y'){
         try{
             ret->data.ident.yAux = std::stoi(str.substr(1,str.length()));

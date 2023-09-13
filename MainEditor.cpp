@@ -1,6 +1,8 @@
 #include "MainSynth.h"
 #include "MainEditor.h"
+#include <sstream>
 
+#define NUM_YAUXES 6
 //==============================================================================
 MainEditor::MainEditor(MainSynth &p)
     : AudioProcessorEditor(&p), processorRef(p),
@@ -15,7 +17,12 @@ MainEditor::MainEditor(MainSynth &p)
 
     addAndMakeVisible(graph);
 
-    addAndMakeVisible(expressionInput);
+    addAndMakeVisible(equationsView);
+
+    equationsView.addAndMakeVisible(errorLabel);
+    errorLabel.setColour(juce::Label::textColourId, juce::Colours::red);
+
+    equationsView.addAndMakeVisible(expressionInput);
     expressionInput.setEditable(true);
     expressionInput.setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
     expressionInput.onTextChange = [this]
@@ -24,13 +31,40 @@ MainEditor::MainEditor(MainSynth &p)
     };
     expressionInput.setText(expr, juce::dontSendNotification);
 
-
-    addAndMakeVisible(yEqualsLabel);
+    equationsView.addAndMakeVisible(yEqualsLabel);
     yEqualsLabel.attachToComponent(&expressionInput, true);
     yEqualsLabel.setText("y = ", juce::dontSendNotification);
 
-    addAndMakeVisible(errorLabel);
-    errorLabel.setColour(juce::Label::textColourId, juce::Colours::red);
+    yAuxes.resize(NUM_YAUXES);
+
+    for (int i = 0; i < NUM_YAUXES; i++)
+    {
+        juce::Label *inputBox = new juce::Label();
+        juce::Label *errorText = new juce::Label();
+        juce::Label *yAuxEquals = new juce::Label();
+
+        equationsView.addAndMakeVisible(errorText);
+        errorText->setColour(juce::Label::textColourId, juce::Colours::red);
+        errorsAndYAuxes.emplace_back(errorText);
+
+        equationsView.addAndMakeVisible(inputBox);
+        inputBox->setEditable(true);
+        inputBox->setColour(juce::Label::backgroundColourId, juce::Colours::darkblue);
+        inputBox->onTextChange = [this]
+        {
+            changeYAuxText();
+        };
+
+        equationsView.addAndMakeVisible(yAuxEquals);
+        yAuxEquals->attachToComponent(inputBox, true);
+        std::stringstream ss;
+        ss << "y" << i << " = ";
+        yAuxEquals->setText(ss.str(), juce::dontSendNotification);
+
+        errorsAndYAuxes.emplace_back(inputBox);
+
+        // std::cout << errorsAndYAuxes[i+1]->getText()<<std::endl;
+    }
 
     addAndMakeVisible(midiKeyboard);
 
@@ -38,7 +72,7 @@ MainEditor::MainEditor(MainSynth &p)
 
     setExpressionText(expr);
 
-    setSize(600, 600);
+    setSize(600, 800);
 }
 
 MainEditor::~MainEditor()
@@ -58,10 +92,12 @@ void MainEditor::paint(juce::Graphics &g)
 
 void MainEditor::resized()
 {
-    auto r = getLocalBounds().reduced (8);
-    errorLabel.setBounds(50, 350, getWidth() - 110, 20);
-    expressionInput.setBounds(50, 400, getWidth() - 110, 20);
+    auto r = getLocalBounds().reduced(8);
+    equationsView.setBounds(0, 400, getWidth(), 300);
     midiKeyboard.setBounds(r.removeFromBottom(70));
+
+    // equationsView bounds
+    resizeView();
 }
 
 void MainEditor::setExpressionText(juce::String expr)
@@ -81,5 +117,38 @@ void MainEditor::setExpressionText(juce::String expr)
     catch (EquationException e)
     {
         errorLabel.setText(e.what(), juce::dontSendNotification);
+    }
+}
+void MainEditor::changeYAuxText()
+{
+    for (int i = 1; i < errorsAndYAuxes.size(); i += 2)
+    {
+        errorsAndYAuxes[i - 1]->setText("", juce::dontSendNotification);
+        std::string s = errorsAndYAuxes[i]->getText().toStdString();
+        Parser p = Parser(s);
+        if (errorsAndYAuxes[i]->getText().compare("") != 0)
+        {
+            try
+            {
+                yAuxes[i/2] = p.parseExpression();
+            }
+            catch (EquationException e)
+            {
+                errorsAndYAuxes[i - 1]->setText(e.what(), juce::dontSendNotification);
+            }
+        }
+    }
+    processorRef.setYAuxes(yAuxes);
+    graph.setYAuxes(yAuxes);
+}
+void MainEditor::resizeView()
+{
+    errorLabel.setBounds(50, 0, getWidth() - 110, 20);
+    expressionInput.setBounds(50, 20, getWidth() - 110, 20);
+
+    for (int i = 0; i < errorsAndYAuxes.size(); i++)
+    {
+
+        errorsAndYAuxes[i]->setBounds(50, (i + 2) * 20, getWidth() - 110, 20);
     }
 }

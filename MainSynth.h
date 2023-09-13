@@ -44,11 +44,13 @@ public:
     void setStateInformation(const void *data, int sizeInBytes) override;
 
     void setExpression(AST *expr);
+    void setYAuxes(std::vector<AST *> yAuxes);
     void setFrequency(double freq);
     juce::MidiKeyboardState keyboardState;
 
 private:
     AST *expression;
+    std::vector<AST *> yAuxes;
     double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
     double frequency = 440;
     juce::Random random;

@@ -1,9 +1,10 @@
 #include "WaveSound.h"
 #include "Parser/unparseMath.h"
 
-WaveVoice::WaveVoice(AST *expr)
+WaveVoice::WaveVoice(AST *expr, std::vector<AST *> yA)
 {
 	WaveVoice::expression = expr;
+	WaveVoice::yAuxes = yA;
 }
 
 bool WaveVoice::canPlaySound(juce::SynthesiserSound *sound)
@@ -60,7 +61,7 @@ void WaveVoice::renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int star
 	{
 		while (--numSamples >= 0)
 		{
-			auto currentSample = (float)resultExpression(expression, xCurrent, frequency);
+			auto currentSample = (float)resultExpression(expression, xCurrent, frequency, yAuxes);
 
 			if (currentSample > 1)
 			{

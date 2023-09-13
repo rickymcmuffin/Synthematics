@@ -59,7 +59,6 @@ void Parser::eat(token_type tt)
 
 AST *Parser::parseExpression()
 {
-
 	token fst = currentTok;
 	if(fst.typ == lcurlysym){
 		return parsePeacewise();

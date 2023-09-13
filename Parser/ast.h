@@ -122,7 +122,7 @@ typedef struct
     // name of a constant or variable
     const char *name;
 
-    unsigned int yAux; // 0 if not y1, y2, ..., yn
+    int yAux; // 0 if not y1, y2, ..., yn
 } ident_t;
 
 // E ::= n

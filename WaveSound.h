@@ -13,7 +13,7 @@ public:
 class WaveVoice : public juce::SynthesiserVoice
 {
 public:
-	WaveVoice(AST *expression);
+	WaveVoice(AST *expression, std::vector<AST *> yA);
 
 	bool canPlaySound(juce::SynthesiserSound *sound) override;
 
@@ -37,4 +37,5 @@ private:
 	double xCurrent = 0.0, xDelta = 0.0;
 	double frequency = 440;
 	AST *expression;
+	std::vector<AST *> yAuxes;
 };

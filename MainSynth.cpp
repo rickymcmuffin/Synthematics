@@ -198,6 +198,11 @@ void MainSynth::setExpression(AST *expr)
     initializeSynth();
 }
 
+void MainSynth::setYAuxes(std::vector<AST *> yA){
+    MainSynth::yAuxes = yA; 
+    initializeSynth();    
+}
+
 void MainSynth::setFrequency(double freq)
 {
     MainSynth::frequency = freq;
@@ -212,7 +217,7 @@ void MainSynth::initializeSynth()
 
     // Add some voices...
     for (auto i = 0; i < numVoices; ++i)
-        synth.addVoice(new WaveVoice(expression));
+        synth.addVoice(new WaveVoice(expression, yAuxes));
 
     // ..and give the synth a sound to play
     synth.addSound(new WaveSound());

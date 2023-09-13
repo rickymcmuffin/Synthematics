@@ -46,7 +46,7 @@ void GraphComponent::paint(juce::Graphics &g)
         for (double x = xMin; x < xMax; x += interval)
         {
 
-            double newYVal = resultExpression(expression, x + interval);
+            double newYVal = resultExpression(expression, x + interval, 1, yAuxes);
             // cout << "x: " << x + interval <<", y: " << newYVal<<endl;
 
             g.drawLine(getXPixel(x), getYPixel(firstYVal), getXPixel(x + interval), getYPixel(newYVal), 2);
@@ -99,5 +99,10 @@ void GraphComponent::resized()
 
 void GraphComponent::setExpression(AST *ast){
     GraphComponent::expression = ast;
+    repaint();
+}
+    
+void GraphComponent::setYAuxes(std::vector<AST *> yA){
+    GraphComponent::yAuxes = yA;
     repaint();
 }

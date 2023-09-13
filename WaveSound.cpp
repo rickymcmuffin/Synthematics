@@ -34,8 +34,8 @@ void WaveVoice::stopNote(float /*velocity*/, bool allowTailOff)
 		if (tailOff == 0.0) // we only need to begin a tail-off if it's not already doing so - the
 						// stopNote method could be called more than once.
 			tailOff = 1.0;
-		clearCurrentNote();
-		xDelta = 0.0;
+		// clearCurrentNote();
+		// xDelta = 0.0;
 	}
 	else
 	{
@@ -70,8 +70,17 @@ void WaveVoice::renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int star
 			{
 				currentSample = -1;
 			}
-
 			currentSample *= (float)level;
+			if (tailOff > 0)
+			{
+				currentSample *= (float)tailOff;
+				tailOff *= 0.99;
+				if(tailOff <= 0.005){
+					clearCurrentNote();
+					xDelta = 0.0;
+					break;
+				}
+			}
 
 			for (auto i = outputBuffer.getNumChannels(); --i >= 0;)
 				outputBuffer.addSample(i, startSample, currentSample);

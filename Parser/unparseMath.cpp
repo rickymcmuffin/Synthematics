@@ -68,7 +68,6 @@ double resultExpr(AST *expr)
 
 double resultPeacewise(AST *expr)
 {
-	cout << "resultPeacewsie"<<endl;
 	AST_list condExprs = expr->data.peacewise.cond_exprs;
 
 	while(!ast_list_is_empty(condExprs)){

@@ -75,7 +75,7 @@ void WaveVoice::renderNextBlock(juce::AudioBuffer<float> &outputBuffer, int star
 			if (tailOff > 0)
 			{
 				currentSample *= (float)tailOff;
-				tailOff *= 0.99;
+				tailOff *= 1-250*xDelta;
 				if(tailOff <= 0.005){
 					clearCurrentNote();
 					xDelta = 0.0;

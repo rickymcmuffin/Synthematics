@@ -34,13 +34,17 @@ sign(sin(f*2*3.14*x))
 ```
 
 ## Woah! What are those functions doing there?!
-Well Synthematics supports a variet of functions. Here's a list:
+Well Synthematics supports a variety of functions. Here's a list:
 
 Returns the sine of x.
 ```
 sin(x)
 ```
 
+Returns the cosine of x.
+```
+cos(x)
+```
 
 Returns base^pow.
 ```

@@ -8,7 +8,7 @@ GraphComponent::GraphComponent()
 
     GraphComponent::expression = NULL;
     
-    setSize(600, 400);
+    // setSize(600, 400);
     // GraphComponent::expression = p.parseExpression();
 
     // GraphComponent::expression = expression;

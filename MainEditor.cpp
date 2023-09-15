@@ -29,6 +29,10 @@ MainEditor::MainEditor(MainSynth &p)
     {
         setExpressionText(expressionInput.getText());
     };
+    expressionInput.onEditorShow = [this]
+    {
+        std::cout <<"hello"<<std::endl;
+    };
     expressionInput.setText(expr, juce::dontSendNotification);
 
     equationsView.addAndMakeVisible(yEqualsLabel);
@@ -54,6 +58,10 @@ MainEditor::MainEditor(MainSynth &p)
         {
             changeYAuxText();
         };
+        inputBox->onEditorShow = [this]
+        {
+            setGraphExpr(inputBox);
+        };
 
         equationsView.addAndMakeVisible(yAuxEquals);
         yAuxEquals->attachToComponent(inputBox, true);
@@ -72,7 +80,7 @@ MainEditor::MainEditor(MainSynth &p)
 
     setExpressionText(expr);
 
-    setSize(600, 800);
+    setSize(1000, 480);
 }
 
 MainEditor::~MainEditor()
@@ -93,8 +101,9 @@ void MainEditor::paint(juce::Graphics &g)
 void MainEditor::resized()
 {
     auto r = getLocalBounds().reduced(8);
-    equationsView.setBounds(0, 400, getWidth(), 300);
+    equationsView.setBounds(0, 0, 400, 400);
     midiKeyboard.setBounds(r.removeFromBottom(70));
+    graph.setBounds(400, 0, getWidth()-400, 400);
 
     // equationsView bounds
     resizeView();
@@ -130,7 +139,7 @@ void MainEditor::changeYAuxText()
         {
             try
             {
-                yAuxes[i/2] = p.parseExpression();
+                yAuxes[i / 2] = p.parseExpression();
             }
             catch (EquationException e)
             {
@@ -143,12 +152,19 @@ void MainEditor::changeYAuxText()
 }
 void MainEditor::resizeView()
 {
-    errorLabel.setBounds(50, 0, getWidth() - 110, 20);
-    expressionInput.setBounds(50, 20, getWidth() - 110, 20);
+    errorLabel.setBounds(50, 0, equationsView.getWidth() - 80, 20);
+    expressionInput.setBounds(50, 20, equationsView.getWidth() - 80, 20);
 
     for (int i = 0; i < errorsAndYAuxes.size(); i++)
     {
 
-        errorsAndYAuxes[i]->setBounds(50, (i + 2) * 20, getWidth() - 110, 20);
+        errorsAndYAuxes[i]->setBounds(50, (i + 2) * 20, equationsView.getWidth() - 80, 20);
     }
+}
+
+void MainEditor::setGraphExpr(AST *ast){
+    std::string s = input.getText().toStdStr();
+    
+    Parser p = Parser(s);
+
 }

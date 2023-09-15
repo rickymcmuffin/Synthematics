@@ -37,10 +37,12 @@ private:
 
     AST *expression;
 
+    int lastEdited;
+
     void setExpressionText(juce::String expr);
     void changeYAuxText();
 
-    void setGraphExpr(juce:: Label input);
+    void setGraphExpr();
     void resizeView();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainEditor)

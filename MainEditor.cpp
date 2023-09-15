@@ -28,10 +28,11 @@ MainEditor::MainEditor(MainSynth &p)
     expressionInput.onTextChange = [this]
     {
         setExpressionText(expressionInput.getText());
+        setGraphExpr();
     };
     expressionInput.onEditorShow = [this]
     {
-        std::cout <<"hello"<<std::endl;
+        setGraphExpr();
     };
     expressionInput.setText(expr, juce::dontSendNotification);
 
@@ -57,10 +58,11 @@ MainEditor::MainEditor(MainSynth &p)
         inputBox->onTextChange = [this]
         {
             changeYAuxText();
+            setGraphExpr();
         };
         inputBox->onEditorShow = [this]
         {
-            setGraphExpr(inputBox);
+            setGraphExpr();
         };
 
         equationsView.addAndMakeVisible(yAuxEquals);
@@ -81,6 +83,7 @@ MainEditor::MainEditor(MainSynth &p)
     setExpressionText(expr);
 
     setSize(1000, 480);
+    lastEdited = -1;
 }
 
 MainEditor::~MainEditor()
@@ -162,9 +165,26 @@ void MainEditor::resizeView()
     }
 }
 
-void MainEditor::setGraphExpr(AST *ast){
-    std::string s = input.getText().toStdStr();
+void MainEditor::setGraphExpr(){
+    if(expressionInput.isBeingEdited()){
+        graph.setExpression(expression);
+        lastEdited = -1;
+        return;
+    }
+    for(int i = 0; i < yAuxes.size(); i++){
+        if(errorsAndYAuxes[2*i + 1]->isBeingEdited()){
+            graph.setExpression(yAuxes[i]);
+            lastEdited = i;
+            return;
+        }
+    }
+    if(lastEdited == -1){
+        graph.setExpression(expression);
+    } else {
+        graph.setExpression(yAuxes[lastEdited]);
+    }
+
     
-    Parser p = Parser(s);
+    
 
 }

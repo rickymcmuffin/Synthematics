@@ -94,7 +94,6 @@ void MainSynth::prepareToPlay(double sampleRate, int /*samplesPerBlock*/)
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     MainSynth::xDelta = 1 / sampleRate;
-    std::cout << xDelta << std::endl;
     initializeSynth();
     synth.setCurrentPlaybackSampleRate(sampleRate);
 }

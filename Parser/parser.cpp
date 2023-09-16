@@ -115,7 +115,6 @@ AST *Parser::parseBinRelCond()
 // <rel-op> ::= = | != | < | <= | > | >=
 rel_op Parser::parseRelOp()
 {
-	cout<< "relop: "<<ttyp2str(currentTok.typ)<<endl;;
 	rel_op ret;
 	switch (currentTok.typ)
 	{

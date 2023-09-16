@@ -55,6 +55,8 @@ private:
     double frequency = 440;
     juce::Random random;
     juce::Synthesiser synth;
+    
+    bool hasStarted;
 
     void initializeSynth();
 

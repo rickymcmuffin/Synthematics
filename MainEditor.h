@@ -10,6 +10,7 @@ class MainEditor  : public juce::AudioProcessorEditor
 {
 public:
     explicit MainEditor (MainSynth&);
+    MainEditor(MainSynth&, std::string expr, std::vector<std::string> yAStrs);
     ~MainEditor() override;
 
     //==============================================================================

@@ -33,8 +33,8 @@ sin(f*2*3.14*x)
 sign(sin(f*2*3.14*x))
 ```
 
-## Woah! What are those functions doing there?!
-Well Synthematics supports a variety of functions. Here's a list:
+## What functions can I use?
+Synthematics supports a variety of functions. Here's a list:
 
 Returns the sine of x.
 ```

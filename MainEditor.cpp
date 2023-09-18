@@ -8,9 +8,29 @@ MainEditor::MainEditor(MainSynth &p, std::string exprStr, std::vector<std::strin
     : AudioProcessorEditor(&p), processorRef(p),
       midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 {
+    init(exprStr, yAstrs);
 
-    std::cout <<"huh"<<std::endl;
-    // juce::String expr = "sin(f * 2 * 3.14 * x)";
+}
+
+MainEditor::MainEditor(MainSynth &p)
+    : AudioProcessorEditor(&p), processorRef(p),
+      midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
+{
+    std::string expr = "sin(f * 2 * 3.14 * x)";
+
+    std::vector<std::string> yAStrs(NUM_YAUXES);
+
+    std::fill(yAStrs.begin(), yAStrs.end(), "");
+
+    init(expr, yAStrs);
+
+}
+
+MainEditor::~MainEditor()
+{
+}
+
+void MainEditor::init(std::string exprStr, std::vector<std::string> yAstrs){
 
     addAndMakeVisible(graph);
 
@@ -61,6 +81,7 @@ MainEditor::MainEditor(MainSynth &p, std::string exprStr, std::vector<std::strin
         {
             setGraphExpr();
         };
+        inputBox->setText(yAstrs[i], juce::dontSendNotification);
 
         equationsView.addAndMakeVisible(yAuxEquals);
         yAuxEquals->attachToComponent(inputBox, true);
@@ -78,28 +99,12 @@ MainEditor::MainEditor(MainSynth &p, std::string exprStr, std::vector<std::strin
     expressionInput.setJustificationType(juce::Justification::bottom);
 
     setExpressionText(exprStr);
+    changeYAuxText();
 
     setSize(1000, 480);
     lastEdited = -1;
     // std::cout << "whY"<<std::endl;
-}
 
-MainEditor::MainEditor(MainSynth &p)
-    : AudioProcessorEditor(&p), processorRef(p),
-      midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
-{
-    std::string expr = "sin(f * 2 * 3.14 * x)";
-
-    std::vector<std::string> yAStrs(NUM_YAUXES);
-
-    std::fill(yAStrs.begin(), yAStrs.end(), "");
-
-    MainEditor(p, expr, yAStrs);
-
-}
-
-MainEditor::~MainEditor()
-{
 }
 
 //==============================================================================

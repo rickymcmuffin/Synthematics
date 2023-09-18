@@ -40,6 +40,7 @@ private:
 
     int lastEdited;
 
+    void init(std::string exprStr, std::vector<std::string> yAstrs);
     void setExpressionText(juce::String expr);
     void changeYAuxText();
 

@@ -164,18 +164,24 @@ bool MainSynth::hasEditor() const
 
 juce::AudioProcessorEditor *MainSynth::createEditor()
 {
-    // if (!hasStarted)
-    // {
-    //     return new MainEditor(*this);
-    // }
-    // return new MainEditor(*this);
-    std::string expr = "sin(f * 2 * 3.14 * x)";
+    if (!hasStarted)
+    {
+        hasStarted = true;
+        return new MainEditor(*this);
+    }
+    std::string yStr = unparseExpression(expression); 
+    std::vector<std::string> yAuxStrs(yAuxes.size());
+    for(int i = 0; i < yAuxes.size(); i++){
+        yAuxStrs[i] = unparseExpression(yAuxes[i]);
+    }
+    return new MainEditor(*this, yStr, yAuxStrs);
+//     std::string expr = "sin(f * 2 * 3.14 * x)";
 
-    std::vector<std::string> yAStrs(8);
+//     std::vector<std::string> yAStrs(8);
 
-    std::fill(yAStrs.begin(), yAStrs.end(), "");
+//     std::fill(yAStrs.begin(), yAStrs.end(), "");
 
-    return new MainEditor(*this, expr, yAStrs);
+//     return new MainEditor(*this, expr, yAStrs);
 }
 
 //==============================================================================

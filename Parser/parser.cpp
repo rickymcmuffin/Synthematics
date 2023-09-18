@@ -60,9 +60,6 @@ void Parser::eat(token_type tt)
 AST *Parser::parseExpression()
 {
 	token fst = currentTok;
-	if(fst.typ == lcurlysym){
-		return parsePeacewise();
-	}
 	AST *trm = parseTerm();
 	AST *exp = trm;
 	while (currentTok.typ == plussym || currentTok.typ == minussym)
@@ -259,6 +256,9 @@ AST *Parser::parseFactor()
 		return parseSignedNumber();
 		break;
 	}
+	case lcurlysym:
+		return parsePeacewise();
+		break;
 	default: // empty statement needed so label isn't immediately
 		    // followed by a declaration, which is prohibited in C;
 	{

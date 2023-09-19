@@ -17,6 +17,7 @@ MainSynth::MainSynth()
       )
 {
     MainSynth::expression = NULL;
+    hasStarted = false;
 }
 
 MainSynth::~MainSynth()
@@ -94,7 +95,6 @@ void MainSynth::prepareToPlay(double sampleRate, int /*samplesPerBlock*/)
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     MainSynth::xDelta = 1 / sampleRate;
-    std::cout << xDelta << std::endl;
     initializeSynth();
     synth.setCurrentPlaybackSampleRate(sampleRate);
 }
@@ -154,7 +154,6 @@ void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
 
     // and now get our synth to process these midi events and generate its output.
     synth.renderNextBlock(buffer, midiMessages, 0, numSamples);
-
 }
 
 //==============================================================================
@@ -165,7 +164,24 @@ bool MainSynth::hasEditor() const
 
 juce::AudioProcessorEditor *MainSynth::createEditor()
 {
-    return new MainEditor(*this);
+    if (!hasStarted)
+    {
+        hasStarted = true;
+        return new MainEditor(*this);
+    }
+    std::string yStr = unparseExpression(expression); 
+    std::vector<std::string> yAuxStrs(yAuxes.size());
+    for(int i = 0; i < yAuxes.size(); i++){
+        yAuxStrs[i] = unparseExpression(yAuxes[i]);
+    }
+    return new MainEditor(*this, yStr, yAuxStrs);
+//     std::string expr = "sin(f * 2 * 3.14 * x)";
+
+//     std::vector<std::string> yAStrs(8);
+
+//     std::fill(yAStrs.begin(), yAStrs.end(), "");
+
+//     return new MainEditor(*this, expr, yAStrs);
 }
 
 //==============================================================================
@@ -221,9 +237,10 @@ void MainSynth::setExpression(AST *expr)
     initializeSynth();
 }
 
-void MainSynth::setYAuxes(std::vector<AST *> yA){
-    MainSynth::yAuxes = yA; 
-    initializeSynth();    
+void MainSynth::setYAuxes(std::vector<AST *> yA)
+{
+    MainSynth::yAuxes = yA;
+    initializeSynth();
 }
 
 void MainSynth::setFrequency(double freq)

@@ -12,6 +12,7 @@ class MainEditor  : public juce::AudioProcessorEditor
 {
 public:
     explicit MainEditor (MainSynth&);
+    MainEditor(MainSynth&, std::string expr, std::vector<std::string> yAStrs);
     ~MainEditor() override;
 
     //==============================================================================
@@ -41,6 +42,7 @@ private:
 
     int lastEdited;
 
+    void init(std::string exprStr, std::vector<std::string> yAstrs);
     void setExpressionText(juce::String expr);
     void changeYAuxText();
 

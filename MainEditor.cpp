@@ -3,16 +3,33 @@
 #include <sstream>
 
 //==============================================================================
+MainEditor::MainEditor(MainSynth &p, std::string exprStr, std::vector<std::string> yAstrs)
+    : AudioProcessorEditor(&p), processorRef(p),
+      midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
+{
+    init(exprStr, yAstrs);
+
+}
+
 MainEditor::MainEditor(MainSynth &p)
     : AudioProcessorEditor(&p), processorRef(p),
       midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 {
+    std::string expr = "sin(f * 2 * 3.14 * x)";
 
-    // MainEditor::processorRef = p;
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    // MainComponent::graph = GraphComponent(expression);
-    juce::String expr = "sin(f * 2 * 3.14 * x)";
+    std::vector<std::string> yAStrs(NUM_YAUXES);
+
+    std::fill(yAStrs.begin(), yAStrs.end(), "");
+
+    init(expr, yAStrs);
+
+}
+
+MainEditor::~MainEditor()
+{
+}
+
+void MainEditor::init(std::string exprStr, std::vector<std::string> yAstrs){
 
     addAndMakeVisible(graph);
 
@@ -33,7 +50,7 @@ MainEditor::MainEditor(MainSynth &p)
     {
         setGraphExpr();
     };
-    expressionInput.setText(expr, juce::dontSendNotification);
+    expressionInput.setText(exprStr, juce::dontSendNotification);
 
     equationsView.addAndMakeVisible(yEqualsLabel);
     yEqualsLabel.attachToComponent(&expressionInput, true);
@@ -63,6 +80,7 @@ MainEditor::MainEditor(MainSynth &p)
         {
             setGraphExpr();
         };
+        inputBox->setText(yAstrs[i], juce::dontSendNotification);
 
         equationsView.addAndMakeVisible(yAuxEquals);
         yAuxEquals->attachToComponent(inputBox, true);
@@ -79,14 +97,13 @@ MainEditor::MainEditor(MainSynth &p)
 
     expressionInput.setJustificationType(juce::Justification::bottom);
 
-    setExpressionText(expr);
+    setExpressionText(exprStr);
+    changeYAuxText();
 
     setSize(1000, 480);
     lastEdited = -1;
-}
+    // std::cout << "whY"<<std::endl;
 
-MainEditor::~MainEditor()
-{
 }
 
 //==============================================================================
@@ -105,7 +122,7 @@ void MainEditor::resized()
     auto r = getLocalBounds().reduced(8);
     equationsView.setBounds(0, 0, 400, 400);
     midiKeyboard.setBounds(r.removeFromBottom(70));
-    graph.setBounds(400, 0, getWidth()-400, 400);
+    graph.setBounds(400, 0, getWidth() - 400, 400);
 
     // equationsView bounds
     resizeView();
@@ -164,26 +181,29 @@ void MainEditor::resizeView()
     }
 }
 
-void MainEditor::setGraphExpr(){
-    if(expressionInput.isBeingEdited()){
+void MainEditor::setGraphExpr()
+{
+    if (expressionInput.isBeingEdited())
+    {
         graph.setExpression(expression);
         lastEdited = -1;
         return;
     }
-    for(int i = 0; i < yAuxes.size(); i++){
-        if(errorsAndYAuxes[2*i + 1]->isBeingEdited()){
+    for (int i = 0; i < yAuxes.size(); i++)
+    {
+        if (errorsAndYAuxes[2 * i + 1]->isBeingEdited())
+        {
             graph.setExpression(yAuxes[i]);
             lastEdited = i;
             return;
         }
     }
-    if(lastEdited == -1){
+    if (lastEdited == -1)
+    {
         graph.setExpression(expression);
-    } else {
+    }
+    else
+    {
         graph.setExpression(yAuxes[lastEdited]);
     }
-
-    
-    
-
 }

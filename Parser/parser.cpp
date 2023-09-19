@@ -60,6 +60,10 @@ void Parser::eat(token_type tt)
 AST *Parser::parseExpression()
 {
 	token fst = currentTok;
+	if(fst.typ == eofsym){
+		eat(eofsym);
+		return NULL;
+	}
 	AST *trm = parseTerm();
 	AST *exp = trm;
 	while (currentTok.typ == plussym || currentTok.typ == minussym)

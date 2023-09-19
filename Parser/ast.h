@@ -16,7 +16,8 @@ typedef enum
     bin_expr_ast,
     func_call_ast,
     ident_ast,
-    number_ast
+    number_ast,
+    empty_ast
 } AST_type;
 
 // forward declaration, so can use the type AST* below

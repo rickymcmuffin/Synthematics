@@ -8,7 +8,6 @@ MainEditor::MainEditor(MainSynth &p, std::string exprStr, std::vector<std::strin
       midiKeyboard(p.keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 {
     init(exprStr, yAstrs);
-
 }
 
 MainEditor::MainEditor(MainSynth &p)
@@ -22,14 +21,14 @@ MainEditor::MainEditor(MainSynth &p)
     std::fill(yAStrs.begin(), yAStrs.end(), "");
 
     init(expr, yAStrs);
-
 }
 
 MainEditor::~MainEditor()
 {
 }
 
-void MainEditor::init(std::string exprStr, std::vector<std::string> yAstrs){
+void MainEditor::init(std::string exprStr, std::vector<std::string> yAstrs)
+{
 
     addAndMakeVisible(graph);
 
@@ -103,7 +102,6 @@ void MainEditor::init(std::string exprStr, std::vector<std::string> yAstrs){
     setSize(1000, 480);
     lastEdited = -1;
     // std::cout << "whY"<<std::endl;
-
 }
 
 //==============================================================================
@@ -154,16 +152,13 @@ void MainEditor::changeYAuxText()
         errorsAndYAuxes[i - 1]->setText("", juce::dontSendNotification);
         std::string s = errorsAndYAuxes[i]->getText().toStdString();
         Parser p = Parser(s);
-        if (errorsAndYAuxes[i]->getText().compare("") != 0)
+        try
         {
-            try
-            {
-                yAuxes[i / 2] = p.parseExpression();
-            }
-            catch (EquationException e)
-            {
-                errorsAndYAuxes[i - 1]->setText(e.what(), juce::dontSendNotification);
-            }
+            yAuxes[i / 2] = p.parseExpression();
+        }
+        catch (EquationException e)
+        {
+            errorsAndYAuxes[i - 1]->setText(e.what(), juce::dontSendNotification);
         }
     }
     processorRef.setYAuxes(yAuxes);

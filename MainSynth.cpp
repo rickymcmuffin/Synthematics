@@ -196,10 +196,8 @@ void MainSynth::getStateInformation(juce::MemoryBlock &destData)
     xml.setAttribute("y", yStr);
     
     for(int i = 0; i < NUM_YAUXES; i++){
-        std::stringstream ss;
-        ss << "y" << i;
         yStr = unparseExpression(yAuxes[i]);
-        juce::String jStr(ss.str());
+        juce::String jStr("y" + std::to_string(i));
         xml.setAttribute(jStr, yStr);
     }
 
@@ -215,11 +213,17 @@ void MainSynth::setStateInformation(const void *data, int sizeInBytes)
     if(xmlState.get() != nullptr){
 
         juce::String yStr = xmlState->getStringAttribute("y");
+        std::cout << yStr.toStdString() << std::endl;
         expression = Parser(yStr.toStdString()).parseExpression();
 
-        
+        yAuxes = std::vector<AST *>(NUM_YAUXES);
+        for(int i = 0; i < NUM_YAUXES; i++){
+            juce::String yAuxStr = xmlState->getStringAttribute("y" + std::to_string(i));
+            std::cout << yAuxStr.toStdString() << std::endl;
+            yAuxes[i] = Parser(yAuxStr.toStdString()).parseExpression();
+        }        
 
-        
+        hasStarted = true;
     }
 }
 

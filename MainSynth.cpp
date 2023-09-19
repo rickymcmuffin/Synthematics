@@ -174,14 +174,37 @@ void MainSynth::getStateInformation(juce::MemoryBlock &destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused(destData);
+    juce::XmlElement xml("ExpressionData");
+
+    std::string yStr = unparseExpression(expression);
+    xml.setAttribute("y", yStr);
+    
+    for(int i = 0; i < NUM_YAUXES; i++){
+        std::stringstream ss;
+        ss << "y" << i;
+        yStr = unparseExpression(yAuxes[i]);
+        juce::String jStr(ss.str());
+        xml.setAttribute(jStr, yStr);
+    }
+
+    copyXmlToBinary(xml, destData);
 }
 
 void MainSynth::setStateInformation(const void *data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-    juce::ignoreUnused(data, sizeInBytes);
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+    if(xmlState.get() != nullptr){
+
+        juce::String yStr = xmlState->getStringAttribute("y");
+        expression = Parser(yStr.toStdString()).parseExpression();
+
+        
+
+        
+    }
 }
 
 //==============================================================================

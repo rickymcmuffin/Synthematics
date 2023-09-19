@@ -2,7 +2,6 @@
 #include "MainEditor.h"
 #include <sstream>
 
-#define NUM_YAUXES 6
 //==============================================================================
 MainEditor::MainEditor(MainSynth &p)
     : AudioProcessorEditor(&p), processorRef(p),

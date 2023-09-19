@@ -5,6 +5,8 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 #include <Vector>
 
+#define NUM_YAUXES 6
+
 //==============================================================================
 class MainEditor  : public juce::AudioProcessorEditor
 {

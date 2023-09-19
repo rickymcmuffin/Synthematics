@@ -16,6 +16,7 @@ MainSynth::MainSynth()
 #endif
       )
 {
+    DBG("starting...");
     MainSynth::expression = NULL;
     hasStarted = false;
 }
@@ -131,7 +132,7 @@ bool MainSynth::isBusesLayoutSupported(const BusesLayout &layouts) const
 void MainSynth::processBlock(juce::AudioBuffer<float> &buffer,
                              juce::MidiBuffer &midiMessages)
 {
-    juce::ignoreUnused(midiMessages);
+    DBG("starting...2");
 
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
@@ -187,6 +188,7 @@ juce::AudioProcessorEditor *MainSynth::createEditor()
 //==============================================================================
 void MainSynth::getStateInformation(juce::MemoryBlock &destData)
 {
+    std::cout << "running getstate" <<std::endl;
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -195,7 +197,7 @@ void MainSynth::getStateInformation(juce::MemoryBlock &destData)
     std::string yStr = unparseExpression(expression);
     xml.setAttribute("y", yStr);
     
-    for(int i = 0; i < NUM_YAUXES; i++){
+    for(int i = 0; i < yAuxes.size(); i++){
         yStr = unparseExpression(yAuxes[i]);
         juce::String jStr("y" + std::to_string(i));
         xml.setAttribute(jStr, yStr);
@@ -213,13 +215,13 @@ void MainSynth::setStateInformation(const void *data, int sizeInBytes)
     if(xmlState.get() != nullptr){
 
         juce::String yStr = xmlState->getStringAttribute("y");
-        std::cout << yStr.toStdString() << std::endl;
+        // std::cout << yStr.toStdString() << std::endl;
         expression = Parser(yStr.toStdString()).parseExpression();
 
         yAuxes = std::vector<AST *>(NUM_YAUXES);
         for(int i = 0; i < NUM_YAUXES; i++){
             juce::String yAuxStr = xmlState->getStringAttribute("y" + std::to_string(i));
-            std::cout << yAuxStr.toStdString() << std::endl;
+            // std::cout << yAuxStr.toStdString() << std::endl;
             yAuxes[i] = Parser(yAuxStr.toStdString()).parseExpression();
         }        
 

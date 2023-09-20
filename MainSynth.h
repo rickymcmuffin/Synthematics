@@ -46,6 +46,8 @@ public:
     void setExpression(AST *expr);
     void setYAuxes(std::vector<AST *> yAuxes);
     void setFrequency(double freq);
+    AST *getExpr();
+    std::vector<AST *> getYAuxes();
     juce::MidiKeyboardState keyboardState;
 
 private:

@@ -16,9 +16,12 @@ MainSynth::MainSynth()
 #endif
       )
 {
+    std::cout << "for" <<std::endl;
     DBG("starting...");
-    MainSynth::expression = NULL;
-    hasStarted = false;
+    MainSynth::expression = Parser("sin(f*2*3.14*x)").parseExpression();
+    yAuxes = std::vector<AST *>(NUM_YAUXES);
+    std::fill(yAuxes.begin(), yAuxes.end(), nullptr);
+    hasStarted = true;
 }
 
 MainSynth::~MainSynth()
@@ -165,24 +168,19 @@ bool MainSynth::hasEditor() const
 
 juce::AudioProcessorEditor *MainSynth::createEditor()
 {
-    if (!hasStarted)
-    {
-        hasStarted = true;
-        return new MainEditor(*this);
-    }
-    std::string yStr = unparseExpression(expression); 
-    std::vector<std::string> yAuxStrs(yAuxes.size());
-    for(int i = 0; i < yAuxes.size(); i++){
-        yAuxStrs[i] = unparseExpression(yAuxes[i]);
-    }
-    return new MainEditor(*this, yStr, yAuxStrs);
-//     std::string expr = "sin(f * 2 * 3.14 * x)";
-
-//     std::vector<std::string> yAStrs(8);
-
-//     std::fill(yAStrs.begin(), yAStrs.end(), "");
-
-//     return new MainEditor(*this, expr, yAStrs);
+    // if (!hasStarted)
+    // {
+    //     hasStarted = true;
+    //     return new MainEditor(*this);
+    // }
+    // std::cout << "bor" <<std::endl;
+    // std::string yStr = unparseExpression(expression); 
+    // std::vector<std::string> yAuxStrs(yAuxes.size());
+    // for(int i = 0; i < yAuxes.size(); i++){
+    //     yAuxStrs[i] = unparseExpression(yAuxes[i]);
+    // }
+    // return new MainEditor(*this, yStr, yAuxStrs);
+    return new MainEditor(*this);
 }
 
 //==============================================================================
@@ -266,4 +264,12 @@ void MainSynth::initializeSynth()
 
     // ..and give the synth a sound to play
     synth.addSound(new WaveSound());
+}
+
+    
+AST *MainSynth::getExpr(){
+    return MainSynth::expression;
+}
+std::vector<AST *> MainSynth::getYAuxes(){
+    return MainSynth::yAuxes;
 }

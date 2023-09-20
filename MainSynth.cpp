@@ -188,7 +188,6 @@ juce::AudioProcessorEditor *MainSynth::createEditor()
 //==============================================================================
 void MainSynth::getStateInformation(juce::MemoryBlock &destData)
 {
-    std::cout << "running getstate" <<std::endl;
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.

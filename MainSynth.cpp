@@ -82,7 +82,7 @@ void MainSynth::setCurrentProgram(int index)
 const juce::String MainSynth::getProgramName(int index)
 {
     juce::ignoreUnused(index);
-    return {};
+    return "Synthematics";
 }
 
 void MainSynth::changeProgramName(int index, const juce::String &newName)

@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "unparser.h"
 #include "unparseMath.h"
+#include <vector>
 
 class EqAST{
 public:
@@ -12,5 +13,10 @@ public:
 
 
 	double getResult(double xVal, double fValue, std::vector<EqAST> yAux);
+
+
+
+private:
+	AST *mainAST;
 
 };

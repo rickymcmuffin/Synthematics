@@ -9,6 +9,7 @@
 # 						unparser.cpp)
 
 add_library(Parser STATIC 	ast.cpp
+						eqast.cpp
 					 	equationException.cpp 
 						lexer.cpp 
 						parser.cpp 

@@ -107,6 +107,8 @@ AST *ast_ident(token t, std::string str)
     strcpy(arr, str.c_str());
     ret->data.ident.name = arr;
 
+    // ret->data.ident.name = str;
+
     ret->data.ident.yAux = -1;
     if(str.at(0) == 'y'){
         try{
@@ -212,4 +214,82 @@ extern void printAST(AST *ast)
 {
     std::cout << astTypeToString(ast->type_tag) + '\n';
 
+}
+
+extern void freeAST(AST *ast){
+    switch(ast->type_tag){
+        case peacewise_ast:
+            freePeaceWiseAST(ast);
+            break;
+        case cond_expr_ast:
+            freeCondExprAST(ast);
+            break;
+        case odd_cond_ast:
+            freeOddCondAST(ast);
+            break;
+        case bin_cond_ast:
+            freeBinCondAST(ast);
+            break;
+        case func_call_ast:
+            freeFuncCallAST(ast);
+            break;
+        case ident_ast:
+            freeIdentAST(ast);
+            break;
+        case number_ast:
+            freeNumberAST(ast);
+            break;
+        default:
+            break;
+    }
+    if(ast != NULL){
+        free(ast);
+    }
+
+}
+
+void freeASTList(AST_list lis){
+    while(!ast_list_is_empty(lis)){
+        AST_list rest = ast_list_rest(lis);
+        freeAST(ast_list_first(lis));
+        lis = rest;
+    }
+}
+
+void freePeaceWiseAST(AST *ast){
+    freeASTList(ast->data.peacewise.cond_exprs);
+}
+
+void freeCondExprAST(AST *ast){
+    freeAST(ast->data.cond_expr.cond);
+    freeAST(ast->data.cond_expr.expr);
+}
+
+void freeOddCondAST(AST *ast){
+    freeAST(ast->data.odd_cond.exp);
+}
+
+void freeBinCondAST(AST *ast){
+    freeAST(ast->data.bin_cond.leftexp);
+    freeAST(ast->data.bin_cond.rightexp);
+}
+
+void freeOpExprAST(AST *ast){
+    freeAST(ast->data.op_expr.exp);
+}
+
+void freeBinExprAST(AST *ast){
+    freeAST(ast->data.bin_expr.leftexp);
+    freeAST(ast->data.bin_expr.rightexp);
+}
+
+void freeFuncCallAST(AST *ast){
+    freeAST(ast->data.func_call.identifier);
+    freeASTList(ast->data.func_call.parameters);
+}
+
+void freeIdentAST(AST *ast){
+    delete ast->data.ident.name;
+}
+void freeNumberAST(AST *ast){
 }

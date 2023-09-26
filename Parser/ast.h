@@ -3,6 +3,7 @@
 #define _AST_H
 #include <iostream>
 #include <stdbool.h>
+#include <string>
 #include "token.h"
 
 // types of ASTs (type tags)
@@ -16,8 +17,7 @@ typedef enum
     bin_expr_ast,
     func_call_ast,
     ident_ast,
-    number_ast,
-    empty_ast
+    number_ast
 } AST_type;
 
 // forward declaration, so can use the type AST* below
@@ -217,5 +217,17 @@ extern int ast_list_size(AST_list lst);
 extern void printAST(AST *ast);
 
 std::string astTypeToString(AST_type type);
+
+extern void freeAST(AST *ast);
+void freeASTList(AST_list lis);
+void freePeaceWiseAST(AST *ast);
+void freeCondExprAST(AST *ast);
+void freeOddCondAST(AST *ast);
+void freeBinCondAST(AST *ast);
+void freeOpExprAST(AST *ast);
+void freeBinExprAST(AST *ast);
+void freeFuncCallAST(AST *ast);
+void freeIdentAST(AST *ast);
+void freeNumberAST(AST *ast);
 
 #endif

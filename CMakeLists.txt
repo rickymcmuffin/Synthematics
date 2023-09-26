@@ -1,3 +1,4 @@
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Example GUI App CMakeLists.txt
 
 # To get started on a new GUI app, copy this entire folder (containing this file and C++ sources) to

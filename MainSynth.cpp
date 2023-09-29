@@ -16,11 +16,15 @@ MainSynth::MainSynth()
 #endif
       )
 {
-    std::cout << "for" <<std::endl;
     DBG("starting...");
+
     MainSynth::expression = Parser("sin(f*2*3.14*x)").parseExpression();
     yAuxes = std::vector<AST *>(NUM_YAUXES);
     std::fill(yAuxes.begin(), yAuxes.end(), nullptr);
+
+    std::vector<std::string> yAuxesStrs = std::vector<std::string>(NUM_YAUXES);
+    std::fill(yAuxesStrs.begin(), yAuxesStrs.end(), "");
+    MainSynth::allASTs = EqAST("sin(f*2*3.14*x)", yAuxesStrs);
     hasStarted = true;
 }
 

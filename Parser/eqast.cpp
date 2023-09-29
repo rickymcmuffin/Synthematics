@@ -3,25 +3,25 @@
 
 #include "eqast.h"
 
-EqAST::EqAST(std::string s, std::vector<std::string> yAs){
-	mainAST = Parser(s).parseExpression();
-
-	for(int i = 0; i < yAs.size(); i++){
-		AST *yAST = Parser(yAs[i]).parseExpression();
-		yAuxes.push_back(yAST);
-	}
+EqAST::EqAST() {
+  
 }
 
-EqAST::~EqAST(){
-	freeAST(mainAST);
+EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
+  mainAST = Parser(s).parseExpression();
+
+  for (int i = 0; i < yAs.size(); i++) {
+    AST *yAST = Parser(yAs[i]).parseExpression();
+    yAuxes.push_back(yAST);
+  }
 }
 
-std::string EqAST::toString(){
-	return unparseExpression(mainAST);
-}
+EqAST::~EqAST() { freeAST(mainAST); }
 
-double EqAST::getResult(double xVal, double fValue){
-	return resultExpression(mainAST, xVal, fValue, yAuxes);
+std::string EqAST::toString() { return unparseExpression(mainAST); }
+
+double EqAST::getResult(double xVal, double fValue) {
+  return resultExpression(mainAST, xVal, fValue, yAuxes);
 }
 
 #endif

@@ -9,6 +9,7 @@
 // This class includes both the main y AST and the yN ASTs
 class EqAST{
 public:
+	EqAST();
 	EqAST(std::string expr, std::vector<std::string> yAs);
 	~EqAST();
 

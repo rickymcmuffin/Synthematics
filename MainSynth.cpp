@@ -18,15 +18,10 @@ MainSynth::MainSynth()
 {
     DBG("starting...");
 
-    // to be deleted one day
-    MainSynth::expression = Parser("sin(f*2*3.14*x)").parseExpression();
-    yAuxes = std::vector<AST *>(NUM_YAUXES);
-    std::fill(yAuxes.begin(), yAuxes.end(), nullptr);
-
     std::vector<std::string> yAuxesStrs = std::vector<std::string>(NUM_YAUXES);
     std::fill(yAuxesStrs.begin(), yAuxesStrs.end(), "");
-    allASTs.setExpression("sin(f*2*3.14*x)", -1);
-    for(int i = 0; i < NUM_YAUXES; i++){
+    allASTs.setExpression("sin(f*2*3.14*x)");
+    for(size_t i = 0; i < NUM_YAUXES; i++){
         allASTs.setExpression("", i);
     }
     hasStarted = true;
@@ -199,11 +194,11 @@ void MainSynth::getStateInformation(juce::MemoryBlock &destData)
     // as intermediaries to make it easy to save and load complex data.
     juce::XmlElement xml("ExpressionData");
 
-    std::string yStr = unparseExpression(expression);
+    std::string yStr = allASTs.toString();
     xml.setAttribute("y", yStr);
     
-    for(int i = 0; i < yAuxes.size(); i++){
-        yStr = unparseExpression(yAuxes[i]);
+    for(size_t i = 0; i < yAuxes.size(); i++){
+        yStr = allASTs.toString(i);
         juce::String jStr("y" + std::to_string(i));
         xml.setAttribute(jStr, yStr);
     }
@@ -221,10 +216,10 @@ void MainSynth::setStateInformation(const void *data, int sizeInBytes)
 
         juce::String yStr = xmlState->getStringAttribute("y");
         // std::cout << yStr.toStdString() << std::endl;
-        expression = Parser(yStr.toStdString()).parseExpression();
+        allASTs.setExpression(yStr.toStdString());
 
         yAuxes = std::vector<AST *>(NUM_YAUXES);
-        for(int i = 0; i < NUM_YAUXES; i++){
+        for(size_t i = 0; i < NUM_YAUXES; i++){
             juce::String yAuxStr = xmlState->getStringAttribute("y" + std::to_string(i));
             // std::cout << yAuxStr.toStdString() << std::endl;
             yAuxes[i] = Parser(yAuxStr.toStdString()).parseExpression();

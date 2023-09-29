@@ -12,6 +12,9 @@ EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
 }
 
 std::string EqAST::toString() { return unparseExpression(mainAST); }
+std::string EqAST::toString(size_t yAuxInd) {
+  return unparseExpression(yAuxes[yAuxInd]);
+}
 
 double EqAST::getResult(double xVal, double fValue) {
   return resultExpression(mainAST, xVal, fValue, yAuxes);
@@ -19,12 +22,12 @@ double EqAST::getResult(double xVal, double fValue) {
 
 // yAux is the index of the yAux.
 // -1 for mainAST
-void EqAST::setExpression(std::string expr, int yAuxInd){
-	if(yAuxInd == -1){
-		free(mainAST);
-		mainAST = Parser(expr).parseExpression();
-	} else {
-		free(yAuxes[yAuxInd]);
-		yAuxes[yAuxInd] = Parser(expr).parseExpression();
-	}
+void EqAST::setExpression(std::string expr, size_t yAuxInd) {
+  free(yAuxes[yAuxInd]);
+  yAuxes[yAuxInd] = Parser(expr).parseExpression();
+}
+
+void EqAST::setExpression(std::string expr) {
+  free(mainAST);
+  mainAST = Parser(expr).parseExpression();
 }

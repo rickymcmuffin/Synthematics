@@ -13,13 +13,14 @@ public:
 	EqAST(std::string expr, std::vector<std::string> yAs);
 
 	std::string toString();
+	std::string toString(size_t yAuxInd);
 
 
 	double getResult(double xVal, double fValue);
 
 	// yAux is the index of the yAux. 
-	// -1 for mainAST
-	void setExpression(std::string expr, int yAuxInd);
+	void setExpression(std::string expr, size_t yAuxInd);
+	void setExpression(std::string expr);
 
 
 private:

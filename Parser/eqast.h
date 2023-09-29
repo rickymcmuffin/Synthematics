@@ -10,6 +10,7 @@
 class EqAST{
 public:
 	EqAST();
+    EqAST(const EqAST& other);
 	EqAST(std::string expr, std::vector<std::string> yAs);
 	~EqAST();
 
@@ -22,6 +23,7 @@ public:
 	// -1 for mainAST
 	void setExpression(std::string expr, int yAux);
 
+    EqAST& operator=(const EqAST& other);
 
 
 private:

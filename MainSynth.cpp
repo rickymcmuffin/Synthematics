@@ -24,7 +24,10 @@ MainSynth::MainSynth()
 
     std::vector<std::string> yAuxesStrs = std::vector<std::string>(NUM_YAUXES);
     std::fill(yAuxesStrs.begin(), yAuxesStrs.end(), "");
-    MainSynth::allASTs = EqAST("sin(f*2*3.14*x)", yAuxesStrs);
+    allASTs.setExpression("sin(f*2*3.14*x)", -1);
+    for(int i = 0; i < NUM_YAUXES; i++){
+        allASTs.setExpression("", i);
+    }
     hasStarted = true;
 }
 

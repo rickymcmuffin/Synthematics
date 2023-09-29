@@ -1,6 +1,3 @@
-#ifndef _EQAST_H
-#define _EQAST_H
-
 #include "eqast.h"
 
 EqAST::EqAST() {
@@ -15,8 +12,14 @@ EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
     yAuxes.push_back(yAST);
   }
 }
+    
+EqAST::EqAST(const EqAST& other){
+    
+};
 
-EqAST::~EqAST() { freeAST(mainAST); }
+EqAST::~EqAST() { 
+    freeAST(mainAST); 
+}
 
 std::string EqAST::toString() { return unparseExpression(mainAST); }
 
@@ -24,4 +27,14 @@ double EqAST::getResult(double xVal, double fValue) {
   return resultExpression(mainAST, xVal, fValue, yAuxes);
 }
 
-#endif
+    
+EqAST& EqAST::operator=(const EqAST& other){
+    std::cout << "called copy"<< std::endl;
+    free(mainAST);
+    for(int i = 0; i < yAuxes.size(); i++){
+        free(yAuxes[i]);
+    }
+    mainAST = other.mainAST;
+    yAuxes = other.yAuxes;
+    return *this;
+}

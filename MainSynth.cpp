@@ -18,6 +18,7 @@ MainSynth::MainSynth()
 {
     DBG("starting...");
 
+    // to be deleted one day
     MainSynth::expression = Parser("sin(f*2*3.14*x)").parseExpression();
     yAuxes = std::vector<AST *>(NUM_YAUXES);
     std::fill(yAuxes.begin(), yAuxes.end(), nullptr);

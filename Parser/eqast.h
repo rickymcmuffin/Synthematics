@@ -10,9 +10,7 @@
 class EqAST{
 public:
 	EqAST();
-    EqAST(const EqAST& other);
 	EqAST(std::string expr, std::vector<std::string> yAs);
-	~EqAST();
 
 	std::string toString();
 
@@ -21,9 +19,7 @@ public:
 
 	// yAux is the index of the yAux. 
 	// -1 for mainAST
-	void setExpression(std::string expr, int yAux);
-
-    EqAST& operator=(const EqAST& other);
+	void setExpression(std::string expr, int yAuxInd);
 
 
 private:

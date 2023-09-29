@@ -1,8 +1,6 @@
 #include "eqast.h"
 
-EqAST::EqAST() {
-  
-}
+EqAST::EqAST() {}
 
 EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
   mainAST = Parser(s).parseExpression();
@@ -12,14 +10,6 @@ EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
     yAuxes.push_back(yAST);
   }
 }
-    
-EqAST::EqAST(const EqAST& other){
-    
-};
-
-EqAST::~EqAST() { 
-    freeAST(mainAST); 
-}
 
 std::string EqAST::toString() { return unparseExpression(mainAST); }
 
@@ -27,14 +17,14 @@ double EqAST::getResult(double xVal, double fValue) {
   return resultExpression(mainAST, xVal, fValue, yAuxes);
 }
 
-    
-EqAST& EqAST::operator=(const EqAST& other){
-    std::cout << "called copy"<< std::endl;
-    free(mainAST);
-    for(int i = 0; i < yAuxes.size(); i++){
-        free(yAuxes[i]);
-    }
-    mainAST = other.mainAST;
-    yAuxes = other.yAuxes;
-    return *this;
+// yAux is the index of the yAux.
+// -1 for mainAST
+void EqAST::setExpression(std::string expr, int yAuxInd){
+	if(yAuxInd == -1){
+		free(mainAST);
+		mainAST = Parser(expr).parseExpression();
+	} else {
+		free(yAuxes[yAuxInd]);
+		yAuxes[yAuxInd] = Parser(expr).parseExpression();
+	}
 }

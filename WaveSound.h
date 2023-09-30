@@ -1,5 +1,5 @@
 #include <juce_audio_processors/juce_audio_processors.h>
-#include "Parser/ast.h"
+#include "Parser/eqast.h"
 
 class WaveSound : public juce::SynthesiserSound
 {
@@ -13,7 +13,7 @@ public:
 class WaveVoice : public juce::SynthesiserVoice
 {
 public:
-	WaveVoice(AST *expression, std::vector<AST *> yA);
+	WaveVoice(std::shared_ptr<EqAST> allASTs);
 
 	bool canPlaySound(juce::SynthesiserSound *sound) override;
 
@@ -36,6 +36,5 @@ private:
 	double tailOff = 0.0;
 	double xCurrent = 0.0, xDelta = 0.0;
 	double frequency = 440;
-	AST *expression;
-	std::vector<AST *> yAuxes;
+  	std::shared_ptr<EqAST> allASTs;
 };

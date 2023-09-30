@@ -43,16 +43,14 @@ public:
   void getStateInformation(juce::MemoryBlock &destData) override;
   void setStateInformation(const void *data, int sizeInBytes) override;
 
-  void setExpression(AST *expr);
-  void setYAuxes(std::vector<AST *> yAuxes);
+  void setExpression(std::string expr);
+  void setYAuxes(std::vector<std::string> yAuxes);
   void setFrequency(double freq);
-  AST *getExpr();
-  std::vector<AST *> getYAuxes();
+  // AST *getExpr();
+  // std::vector<AST *> getYAuxes();
   juce::MidiKeyboardState keyboardState;
 
 private:
-  AST *expression;
-  std::vector<AST *> yAuxes;
 
   // EqAST allASTs = EqAST("sin(f*2*3.14*x)", 8);
   std::shared_ptr<EqAST> allASTs = std::make_shared<EqAST>("sin(f*2*3.14*x)", 8);

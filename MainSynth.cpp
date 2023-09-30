@@ -25,7 +25,7 @@ MainSynth::MainSynth()
     // for (size_t i = 0; i < NUM_YAUXES; i++) {
     //   allASTs.setExpression("", i);
     // }
-    
+
     hasStarted = true;
   }
 }
@@ -162,7 +162,7 @@ juce::AudioProcessorEditor *MainSynth::createEditor() {
   //     yAuxStrs[i] = unparseExpression(yAuxes[i]);
   // }
   // return new MainEditor(*this, yStr, yAuxStrs);
-  return new MainEditor(*this);
+  return new MainEditor(*this, allASTs);
 }
 
 //==============================================================================
@@ -175,7 +175,7 @@ void MainSynth::getStateInformation(juce::MemoryBlock &destData) {
   std::string yStr = allASTs->toString();
   xml.setAttribute("y", yStr);
 
-  for (size_t i = 0; i < yAuxes.size(); i++) {
+  for (size_t i = 0; i < NUM_YAUXES; i++) {
     yStr = allASTs->toString(i);
     juce::String jStr("y" + std::to_string(i));
     xml.setAttribute(jStr, yStr);
@@ -193,19 +193,19 @@ void MainSynth::setStateInformation(const void *data, int sizeInBytes) {
 
   if (xmlState.get() != nullptr) {
     hasStarted = true;
+    if (!hasStarted) {
+    }
 
     juce::String yStr = xmlState->getStringAttribute("y");
     // std::cout << yStr.toStdString() << std::endl;
     allASTs->setExpression(yStr.toStdString());
 
-    yAuxes = std::vector<AST *>(NUM_YAUXES);
     for (size_t i = 0; i < NUM_YAUXES; i++) {
       juce::String yAuxStr =
           xmlState->getStringAttribute("y" + std::to_string(i));
       // std::cout << yAuxStr.toStdString() << std::endl;
       allASTs->setExpression(yAuxStr.toStdString(), i);
     }
-
   }
 }
 
@@ -215,15 +215,14 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter() {
   return new MainSynth();
 }
 
-void MainSynth::setExpression(AST *expr) {
-  MainSynth::expression = expr;
-  xCurrent = 0;
-  initializeSynth();
+void MainSynth::setExpression(std::string expr) {
+  allASTs->setExpression(expr);
 }
 
-void MainSynth::setYAuxes(std::vector<AST *> yA) {
-  MainSynth::yAuxes = yA;
-  initializeSynth();
+void MainSynth::setYAuxes(std::vector<std::string> yA) {
+  for (size_t i = 0; i < yA.size(); i++) {
+    allASTs->setExpression(yA[i], i);
+  }
 }
 
 void MainSynth::setFrequency(double freq) {
@@ -238,11 +237,11 @@ void MainSynth::initializeSynth() {
 
   // Add some voices...
   for (auto i = 0; i < numVoices; ++i)
-    synth.addVoice(new WaveVoice(expression, yAuxes));
+    synth.addVoice(new WaveVoice(allASTs));
 
   // ..and give the synth a sound to play
   synth.addSound(new WaveSound());
 }
 
-AST *MainSynth::getExpr() { return MainSynth::expression; }
-std::vector<AST *> MainSynth::getYAuxes() { return MainSynth::yAuxes; }
+// AST *MainSynth::getExpr() { return MainSynth::expression; }
+// std::vector<AST *> MainSynth::getYAuxes() { return MainSynth::yAuxes; }

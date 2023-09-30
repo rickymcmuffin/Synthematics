@@ -1,53 +1,51 @@
 #pragma once
 
-#include "MainSynth.h"
 #include "GraphComponent.h"
+#include "MainSynth.h"
 #include <juce_audio_utils/juce_audio_utils.h>
-#include <Vector>
+#include <vector>
 
 #define NUM_YAUXES 8
 
 //==============================================================================
-class MainEditor  : public juce::AudioProcessorEditor
-{
+class MainEditor : public juce::AudioProcessorEditor {
 public:
-    explicit MainEditor (MainSynth&);
-    MainEditor(MainSynth&, std::string expr, std::vector<std::string> yAStrs);
-    ~MainEditor() override;
+  explicit MainEditor(MainSynth &);
+  MainEditor(MainSynth &, std::string expr, std::vector<std::string> yAStrs);
+  MainEditor(MainSynth &, std::shared_ptr<EqAST> alAST);
+  ~MainEditor() override;
 
-    //==============================================================================
-    void paint (juce::Graphics&) override;
-    void resized() override;
+  //==============================================================================
+  void paint(juce::Graphics &) override;
+  void resized() override;
 
 private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    MainSynth& processorRef;
+  // This reference is provided as a quick way for your editor to
+  // access the processor object that created it.
+  MainSynth &processorRef;
 
-    GraphComponent graph;
+  GraphComponent graph;
 
-    juce::Label expressionInput;
-    juce::Label yEqualsLabel;
-    juce::Label errorLabel;
+  juce::Label expressionInput;
+  juce::Label yEqualsLabel;
+  juce::Label errorLabel;
 
-    // The even indicies are error labels and odds are equations
-    std::vector<std::unique_ptr<juce::Label>> errorsAndYAuxes;
+  // The even indicies are error labels and odds are equations
+  std::vector<std::unique_ptr<juce::Label>> errorsAndYAuxes;
 
-    std::vector<AST *> yAuxes;
+  juce::Viewport equationsView;
+  juce::MidiKeyboardComponent midiKeyboard;
 
-    juce::Viewport equationsView;
-    juce::MidiKeyboardComponent midiKeyboard;
+  int lastEdited;
 
-    AST *expression;
+  std::shared_ptr<EqAST> allASTs;
 
-    int lastEdited;
+  void init();
+  void setExpressionText(juce::String expr);
+  void changeYAuxText();
 
-    void init(std::string exprStr, std::vector<std::string> yAstrs);
-    void setExpressionText(juce::String expr);
-    void changeYAuxText();
+  void setGraphExpr();
+  void resizeView();
 
-    void setGraphExpr();
-    void resizeView();
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainEditor)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainEditor)
 };

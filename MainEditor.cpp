@@ -3,11 +3,11 @@
 #include <sstream>
 
 MainEditor::MainEditor(MainSynth &p, std::shared_ptr<EqAST> alAST)
-    : AudioProcessorEditor(&p), processorRef(p),
-      graph(alAST), midiKeyboard(p.keyboardState,
+    : AudioProcessorEditor(&p), processorRef(p), graph(alAST),
+      midiKeyboard(p.keyboardState,
                    juce::MidiKeyboardComponent::horizontalKeyboard) {
-	allASTs = alAST;
-	init();
+  allASTs = alAST;
+  init();
 }
 MainEditor::~MainEditor() {}
 

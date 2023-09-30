@@ -27,6 +27,14 @@ double EqAST::getResult(double xVal, double fValue) {
   return resultExpression(mainAST, xVal, fValue, yAuxes);
 }
 
+double EqAST::getResult(double xVal, double fValue, int yAuxInd) {
+  if (yAuxInd == -1) {
+
+    return resultExpression(mainAST, xVal, fValue, yAuxes);
+  }
+  return resultExpression(yAuxes[(size_t)yAuxInd], xVal, fValue, yAuxes);
+}
+
 // yAux is the index of the yAux.
 // -1 for mainAST
 void EqAST::setExpression(std::string expr, size_t yAuxInd) {

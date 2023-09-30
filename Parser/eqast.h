@@ -18,6 +18,7 @@ public:
 
 
 	double getResult(double xVal, double fValue);
+	double getResult(double xVal, double fValue, int yAuxInd);
 
 	// yAux is the index of the yAux. 
 	void setExpression(std::string expr, size_t yAuxInd);

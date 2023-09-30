@@ -44,7 +44,7 @@ void GraphComponent::paint(juce::Graphics &g) {
 
     for (double x = xMin; x < xMax; x += interval) {
 
-      double newYVal = allASTs->getResult(x + interval, 1);
+      double newYVal = allASTs->getResult(x + interval, 1, expressionNum);
       // cout << "x: " << x + interval <<", y: " << newYVal<<endl;
 
       g.drawLine(getXPixel(x), getYPixel(firstYVal), getXPixel(x + interval),

@@ -12,8 +12,8 @@ GraphComponent::GraphComponent(std::shared_ptr<EqAST> alAST) {
 
   xMin = 0;
   xMax = 1;
-  yMin = -1;
-  yMax = 1;
+  yMin = -1.5f;
+  yMax = 1.5f;
 }
 
 //==============================================================================
@@ -27,11 +27,18 @@ void GraphComponent::paint(juce::Graphics &g) {
   // g.drawText ("Hello \nWorld!", getLocalBounds(),
   // juce::Justification::centred, true);
 
-  g.setColour(juce::Colours::grey);
+  g.setColour(juce::Colours::black);
 
+  // draws the cross
   g.drawLine(getXPixel(0) * 1.0f, 0, getXPixel(0) * 1.0f,
              (float)getHeight() * 1.0f);
   g.drawLine(0, getYPixel(0), (float)getWidth() * 1.0f, getYPixel(0));
+
+  g.setColour(juce::Colours::grey);
+
+  g.drawLine(0, getYPixel(1), (float)getWidth() * 1.0f, getYPixel(1));
+  g.drawLine(0, getYPixel(-1), (float)getWidth() * 1.0f, getYPixel(-1));
+
 
   // double xPrecision = (xMax - xMin) / 10;
 

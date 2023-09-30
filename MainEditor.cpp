@@ -24,6 +24,7 @@ void MainEditor::init() {
   expressionInput.setEditable(true);
   expressionInput.setColour(juce::Label::backgroundColourId,
                             juce::Colours::darkblue);
+  expressionInput.setColour(juce::Label::textColourId, juce::Colours::white);
   expressionInput.onTextChange = [this] {
     setExpressionText(expressionInput.getText());
     setGraphExpr();
@@ -48,6 +49,7 @@ void MainEditor::init() {
     inputBox->setEditable(true);
     inputBox->setColour(juce::Label::backgroundColourId,
                         juce::Colours::darkblue);
+    inputBox->setColour(juce::Label::textColourId, juce::Colours::white);
     inputBox->onTextChange = [this] {
       changeYAuxText();
       setGraphExpr();

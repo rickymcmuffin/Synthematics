@@ -2,38 +2,10 @@
 #include "MainSynth.h"
 #include <sstream>
 
-//==============================================================================
-MainEditor::MainEditor(MainSynth &p, std::string exprStr,
-                       std::vector<std::string> yAstrs)
-    : AudioProcessorEditor(&p), processorRef(p),
-      midiKeyboard(p.keyboardState,
-                   juce::MidiKeyboardComponent::horizontalKeyboard) {
-  init(exprStr, yAstrs);
-}
-
-MainEditor::MainEditor(MainSynth &p)
-    : AudioProcessorEditor(&p), processorRef(p),
-      midiKeyboard(p.keyboardState,
-                   juce::MidiKeyboardComponent::horizontalKeyboard) {
-  // std::string expr = "sin(f * 2 * 3.14 * x)";
-
-  std::string expr = unparseExpression(processorRef.getExpr());
-
-  std::vector<std::string> yAStrs(NUM_YAUXES);
-
-  // std::fill(yAStrs.begin(), yAStrs.end(), "");
-
-  for (size_t i = 0; i < yAStrs.size(); i++) {
-    yAStrs[i] = unparseExpression(processorRef.getYAuxes()[i]);
-  }
-
-  init(expr, yAStrs);
-}
 MainEditor::MainEditor(MainSynth &p, std::shared_ptr<EqAST> alAST)
     : AudioProcessorEditor(&p), processorRef(p),
-      midiKeyboard(p.keyboardState,
+      graph(alAST), midiKeyboard(p.keyboardState,
                    juce::MidiKeyboardComponent::horizontalKeyboard) {
-	      graph = GraphComponent(allASTs);
 	allASTs = alAST;
 	init();
 }

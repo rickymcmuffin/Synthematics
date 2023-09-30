@@ -54,14 +54,15 @@ private:
   AST *expression;
   std::vector<AST *> yAuxes;
 
-  EqAST allASTs;
+  // EqAST allASTs = EqAST("sin(f*2*3.14*x)", 8);
+  std::shared_ptr<EqAST> allASTs = std::make_shared<EqAST>("sin(f*2*3.14*x)", 8);
 
   double currentSampleRate = 0.0, xCurrent = 0.0, xDelta = 0.0;
   double frequency = 440;
   juce::Random random;
   juce::Synthesiser synth;
 
-  bool hasStarted;
+  bool hasStarted = false;
 
   void initializeSynth();
 

@@ -2,6 +2,13 @@
 
 EqAST::EqAST() {}
 
+EqAST::EqAST(std::string s, size_t numYAuxes) {
+  mainAST = Parser(s).parseExpression();
+  yAuxes = std::vector<AST *>(numYAuxes);
+  std::vector<std::string> yAuxesStrs = std::vector<std::string>(numYAuxes);
+  std::fill(yAuxesStrs.begin(), yAuxesStrs.end(), "");
+}
+
 EqAST::EqAST(std::string s, std::vector<std::string> yAs) {
   mainAST = Parser(s).parseExpression();
 

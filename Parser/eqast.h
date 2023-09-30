@@ -10,6 +10,7 @@
 class EqAST{
 public:
 	EqAST();
+	EqAST(std::string expr, size_t numYAuxes);
 	EqAST(std::string expr, std::vector<std::string> yAs);
 
 	std::string toString();

@@ -44,6 +44,7 @@ private:
 
   void setGraphExpr();
   void resizeView();
+  std::unique_ptr<juce::FileLogger> m_flogger;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainEditor)
 };

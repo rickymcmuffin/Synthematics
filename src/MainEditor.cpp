@@ -12,6 +12,11 @@ MainEditor::MainEditor(MainSynth &p, std::shared_ptr<EqAST> alAST)
 MainEditor::~MainEditor() {}
 
 void MainEditor::init() {
+  m_flogger = std::unique_ptr<juce::FileLogger>(juce::FileLogger::createDateStampedLogger("SynthematicsLog", "log", ".txt", "Welcome to Synthematics"));
+  if(m_flogger){
+      m_flogger->logMessage("started window");
+      m_flogger->logMessage(allASTs->toString());
+  }
 
   addAndMakeVisible(graph);
 
@@ -30,7 +35,6 @@ void MainEditor::init() {
     setGraphExpr();
   };
   expressionInput.onEditorShow = [this] { setGraphExpr(); };
-  expressionInput.setText(allASTs->toString(), juce::dontSendNotification);
 
   equationsView.addAndMakeVisible(yEqualsLabel);
   yEqualsLabel.attachToComponent(&expressionInput, true);
@@ -55,7 +59,6 @@ void MainEditor::init() {
       setGraphExpr();
     };
     inputBox->onEditorShow = [this] { setGraphExpr(); };
-    inputBox->setText(allASTs->toString(i), juce::dontSendNotification);
 
     equationsView.addAndMakeVisible(yAuxEquals);
     yAuxEquals->attachToComponent(inputBox, true);
@@ -72,12 +75,16 @@ void MainEditor::init() {
 
   expressionInput.setJustificationType(juce::Justification::bottom);
 
-  setExpressionText(allASTs->toString());
-  changeYAuxText();
+  // setExpressionText(allASTs->toString());
+  // changeYAuxText();
 
   setSize(1000, 480);
   lastEdited = -1;
   // std::cout << "whY"<<std::endl;
+  expressionInput.setText(allASTs->toString(), juce::dontSendNotification);
+  for(size_t i = 0; i < NUM_YAUXES; i++){
+    errorsAndYAuxes[i*2 + 1]->setText(allASTs->toString(i), juce::dontSendNotification);
+  }
 }
 
 //==============================================================================

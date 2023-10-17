@@ -1,6 +1,8 @@
 # Synthematics
 Welcome to Synthematics!
 
+![Latest Relase Download](https://github.com/rickymcmuffin/Synthematics/releases/latest)
+
 ## What is Synthematics?
 Synthematics is a Wavetable Synth audio plugin.
 

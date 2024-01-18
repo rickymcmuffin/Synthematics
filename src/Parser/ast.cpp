@@ -104,7 +104,12 @@ AST *ast_ident(token t, std::string str)
     AST *ret = ast_allocate(t.index);
     ret->type_tag = ident_ast;
     char *arr = new char[str.length() + 1];
-    strcpy(arr, str.c_str());
+    // strcpy(arr, str.c_str());
+    for (int i = 0; i< str.length(); i++){
+        arr[i] = str[i];
+
+    }
+    arr[str.length()] = '\0';
     ret->data.ident.name = arr;
 
     // ret->data.ident.name = str;

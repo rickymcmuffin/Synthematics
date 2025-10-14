@@ -4,5 +4,5 @@
 # [package_name]
 # name = "Human Readable Plugin Name"  # defaults to <package_name>
 
-[{{ cookiecutter.project_name }}]
-name = "{{ cookiecutter.plugin_name }}"
+[synthematics]
+name = "Synthematics"

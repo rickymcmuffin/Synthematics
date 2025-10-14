@@ -5,12 +5,12 @@ use std::sync::Arc;
 // https://github.com/robbert-vdh/nih-plug/blob/master/plugins/examples/gain/src/lib.rs to get
 // started
 
-struct {{ cookiecutter.struct_name }} {
-    params: Arc<{{ cookiecutter.struct_name }}Params>,
+struct Synthematics {
+    params: Arc<SynthematicsParams>,
 }
 
 #[derive(Params)]
-struct {{ cookiecutter.struct_name }}Params {
+struct SynthematicsParams {
     /// The parameter's ID is used to identify the parameter in the wrappred plugin API. As long as
     /// these IDs remain constant, you can rename and reorder these fields as you wish. The
     /// parameters are exposed to the host in the same order they were defined. In this case, this
@@ -19,15 +19,15 @@ struct {{ cookiecutter.struct_name }}Params {
     pub gain: FloatParam,
 }
 
-impl Default for {{ cookiecutter.struct_name }} {
+impl Default for Synthematics {
     fn default() -> Self {
         Self {
-            params: Arc::new({{ cookiecutter.struct_name }}Params::default()),
+            params: Arc::new(SynthematicsParams::default()),
         }
     }
 }
 
-impl Default for {{ cookiecutter.struct_name }}Params {
+impl Default for SynthematicsParams {
     fn default() -> Self {
         Self {
             // This gain is stored as linear gain. NIH-plug comes with useful conversion functions
@@ -57,11 +57,11 @@ impl Default for {{ cookiecutter.struct_name }}Params {
     }
 }
 
-impl Plugin for {{ cookiecutter.struct_name }} {
-    const NAME: &'static str = "{{ cookiecutter.plugin_name }}";
-    const VENDOR: &'static str = "{{ cookiecutter.author }}";
+impl Plugin for Synthematics {
+    const NAME: &'static str = "synthematics";
+    const VENDOR: &'static str = "Robert Perez";
     const URL: &'static str = env!("CARGO_PKG_HOMEPAGE");
-    const EMAIL: &'static str = "{{ cookiecutter.email_address }}";
+    const EMAIL: &'static str = "rickymcmuffins@gmail.com";
 
     const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
@@ -135,9 +135,9 @@ impl Plugin for {{ cookiecutter.struct_name }} {
     }
 }
 
-impl ClapPlugin for {{ cookiecutter.struct_name }} {
-    const CLAP_ID: &'static str = "{{ cookiecutter.clap_id }}";
-    const CLAP_DESCRIPTION: Option<&'static str> = Some("{{ cookiecutter.description }}");
+impl ClapPlugin for Synthematics {
+    const CLAP_ID: &'static str = "com.synthematics";
+    const CLAP_DESCRIPTION: Option<&'static str> = Some("synthematics");
     const CLAP_MANUAL_URL: Option<&'static str> = Some(Self::URL);
     const CLAP_SUPPORT_URL: Option<&'static str> = None;
 
@@ -145,13 +145,13 @@ impl ClapPlugin for {{ cookiecutter.struct_name }} {
     const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Stereo];
 }
 
-impl Vst3Plugin for {{ cookiecutter.struct_name }} {
-    const VST3_CLASS_ID: [u8; 16] = *b"{{ cookiecutter.vst3_id }}";
+impl Vst3Plugin for Synthematics {
+    const VST3_CLASS_ID: [u8; 16] = *b"com.synthematics";
 
     // And also don't forget to change these categories
     const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] =
         &[Vst3SubCategory::Fx, Vst3SubCategory::Dynamics];
 }
 
-nih_export_clap!({{ cookiecutter.struct_name }});
-nih_export_vst3!({{ cookiecutter.struct_name }});
+nih_export_clap!(Synthematics);
+nih_export_vst3!(Synthematics);

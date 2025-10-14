@@ -1,11 +1,11 @@
 [package]
-name = "{{ cookiecutter.project_name }}"
+name = "synthematics"
 version = "0.1.0"
 edition = "2021"
-authors = ["{{ cookiecutter.author }} <{{ cookiecutter.email_address }}>"]
-license = "{{ cookiecutter.license }}"
-homepage = "{{ cookiecutter.url }}"
-description = "{{ cookiecutter.description }}"
+authors = ["Robert Perez <rickymcmuffins@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/rickymcmuffin/Synthematics"
+description = "Synthematics"
 
 [workspace]
 members = ["xtask"]
